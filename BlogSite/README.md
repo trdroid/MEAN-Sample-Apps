@@ -81,6 +81,8 @@ This created BlogSite/package.json file
 
 ### Install required modules
 
+Get Express and Jade 
+
 > BlogSite$ npm install --save express jade
 
     npm WARN package.json blogsite@1.0.0 No repository field.
@@ -125,3 +127,60 @@ This created BlogSite/package.json file
     └── uglify-js@2.6.1 (async@0.2.10, uglify-to-browserify@1.0.2, source-map@0.5.3, yargs@3.10.0)
 
 
+Installing express and jade with the --save flag allowed them to be added to the dependencies block in the BlogSite/package.json file
+
+```json
+{
+  "name": "blogsite",
+  "version": "1.0.0",
+  "description": "A sample blogs site",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "gruprog",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.13.4",
+    "jade": "^1.11.0"
+  }
+}
+```
+
+Get Bower
+
+Because bower is used to install client-side dependencies, either install it globally or as a development ONLY dependency, as it is not required in production. 
+
+> $ npm install bower -g
+
+(or)
+
+> $ npm install bower --save-dev
+
+> BlogSite$ npm install bower --save-dev
+
+        npm WARN package.json blogsite@1.0.0 No repository field.
+        bower@1.7.7 node_modules/bower
+
+Notice that bower is added to the devDependencies block of BlogSite/package.json file which implies a development ONLY dependency.
+
+```json
+{
+  "name": "blogsite",
+  "version": "1.0.0",
+  "description": "A sample blogs site",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "gruprog",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.13.4",
+    "jade": "^1.11.0"
+  },
+  "devDependencies": {
+    "bower": "^1.7.7"
+  }
+}
+```
