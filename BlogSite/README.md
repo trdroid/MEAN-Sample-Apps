@@ -323,4 +323,28 @@ Install angular and its modules
     
     angular#1.5.0 public/vendor/angular
 
+Explore the update bower.json file
 
+<i>BlogSite/bower.json</i>
+
+```json
+{
+  "name": "blogsite",
+  "description": "A sample blogs site",
+  "main": "index.js",
+  "authors": [
+    "gruprog"
+  ],
+  "license": "ISC",
+  "homepage": "https://github.com/gruprog/MEAN-Examples",
+  "moduleType": [],
+  "private": true,
+  "dependencies": {
+    "toastr": "^2.1.2",
+    "jquery": "^2.2.0",
+    "angular": "^1.5.0",
+    "angular-resource": "^1.5.0",
+    "angular-route": "^1.5.0"
+  }
+}
+```
