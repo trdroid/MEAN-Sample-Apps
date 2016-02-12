@@ -184,3 +184,143 @@ Notice that bower is added to the devDependencies block of BlogSite/package.json
   }
 }
 ```
+
+Notice the dependencies under <i>BlogSite/node_modules</i>
+
+<img src="_misc/dependencies%20in%20node_module.png"/>
+
+### Install client-side dependencies
+
+Create folder <i>BlogSite/public</i> to host client-side dependencies.
+
+Create BlogSite/.bowerrc file to specify bower where to install client-side dependencies 
+
+<i>BlogSite/.bowerrc</i>
+
+Define an object with the key "directory" specifying where to install client-side dependencies 
+
+```json
+{
+	"directory" : "public/vendor"
+}
+```
+
+<b> Create bower.json file </b>
+
+> BlogSite$ ./node_modules/.bin/bower init
+
+    ? name blogsite
+    ? description A sample blogs site
+    ? main file index.js
+    ? what types of modules does this package expose? 
+    ? keywords 
+    ? authors gruprog
+    ? license ISC
+    ? homepage https://github.com/gruprog/MEAN-Examples
+    ? set currently installed components as dependencies? No
+    ? add commonly ignored files to ignore list? No
+    ? would you like to mark this package as private which prevents it from being accidentally published to the registry? Yes
+    
+    {
+      name: 'blogsite',
+      description: 'A sample blogs site',
+      main: 'index.js',
+      authors: [
+        'gruprog'
+      ],
+      license: 'ISC',
+      homepage: 'https://github.com/gruprog/MEAN-Examples',
+      moduleType: [],
+      private: true
+    }
+    
+    ? Looks good? Yes
+
+This creates bower.json file
+
+<i>BlogSite/bower.json</i>
+
+```json
+{
+  "name": "blogsite",
+  "description": "A sample blogs site",
+  "main": "index.js",
+  "authors": [
+    "gruprog"
+  ],
+  "license": "ISC",
+  "homepage": "https://github.com/gruprog/MEAN-Examples",
+  "moduleType": [],
+  "private": true
+}
+```
+
+<b> Install client-side dependencies </b>
+
+Install 'toastr' for client-side notifications
+
+> BlogSite$ ./node_modules/.bin/bower install toastr --save
+
+    bower toastr#*              not-cached git://github.com/johnpapa/toastr-bower.git#*
+    bower toastr#*                 resolve git://github.com/johnpapa/toastr-bower.git#*
+    bower toastr#*                download https://github.com/johnpapa/toastr-bower/archive/2.1.2.tar.gz
+    bower toastr#*                 extract archive.tar.gz
+    bower toastr#*            invalid-meta toastr is missing "ignore" entry in bower.json
+    bower toastr#*                resolved git://github.com/johnpapa/toastr-bower.git#2.1.2
+    bower jquery#>=1.6.3        not-cached git://github.com/jquery/jquery-dist.git#>=1.6.3
+    bower jquery#>=1.6.3           resolve git://github.com/jquery/jquery-dist.git#>=1.6.3
+    bower jquery#>=1.6.3          download https://github.com/jquery/jquery-dist/archive/2.2.0.tar.gz
+    bower jquery#>=1.6.3           extract archive.tar.gz
+    bower jquery#>=1.6.3          resolved git://github.com/jquery/jquery-dist.git#2.2.0
+    bower toastr#^2.1.2            install toastr#2.1.2
+    bower jquery#>=1.6.3           install jquery#2.2.0
+    
+    toastr#2.1.2 public/vendor/toastr
+    └── jquery#2.2.0
+    
+    jquery#2.2.0 public/vendor/jquery
+
+Install jquery
+
+> BlogSite$ ./node_modules/.bin/bower install jquery --save
+
+    bower jquery#*                  cached git://github.com/jquery/jquery-dist.git#2.2.0
+    bower jquery#*                validate 2.2.0 against git://github.com/jquery/jquery-dist.git#*
+
+Install angular and its modules
+
+> BlogSite$ ./node_modules/.bin/bower install angular angular-resource angular-route --save
+
+    bower angular#*             not-cached git://github.com/angular/bower-angular.git#*
+    bower angular#*                resolve git://github.com/angular/bower-angular.git#*
+    bower angular-resource#*    not-cached git://github.com/angular/bower-angular-resource.git#*
+    bower angular-resource#*       resolve git://github.com/angular/bower-angular-resource.git#*
+    bower angular-route#*       not-cached git://github.com/angular/bower-angular-route.git#*
+    bower angular-route#*          resolve git://github.com/angular/bower-angular-route.git#*
+    bower angular-route#*         download https://github.com/angular/bower-angular-route/archive/v1.5.0.tar.gz
+    bower angular#*               download https://github.com/angular/bower-angular/archive/v1.5.0.tar.gz
+    bower angular-resource#*      download https://github.com/angular/bower-angular-resource/archive/v1.5.0.tar.gz
+    bower angular-route#*          extract archive.tar.gz
+    bower angular-route#*         resolved git://github.com/angular/bower-angular-route.git#1.5.0
+    bower angular#1.5.0         not-cached git://github.com/angular/bower-angular.git#1.5.0
+    bower angular#1.5.0            resolve git://github.com/angular/bower-angular.git#1.5.0
+    bower angular#1.5.0           download https://github.com/angular/bower-angular/archive/v1.5.0.tar.gz
+    bower angular-resource#*       extract archive.tar.gz
+    bower angular-resource#*      resolved git://github.com/angular/bower-angular-resource.git#1.5.0
+    bower angular#*                extract archive.tar.gz
+    bower angular#*               resolved git://github.com/angular/bower-angular.git#1.5.0
+    bower angular#1.5.0            extract archive.tar.gz
+    bower angular#1.5.0           resolved git://github.com/angular/bower-angular.git#1.5.0
+    bower angular-route#^1.5.0     install angular-route#1.5.0
+    bower angular-resource#^1.5.0  install angular-resource#1.5.0
+    bower angular#1.5.0            install angular#1.5.0
+    
+    angular-route#1.5.0 public/vendor/angular-route
+    └── angular#1.5.0
+    
+    angular-resource#1.5.0 public/vendor/angular-resource
+    └── angular#1.5.0
+    
+    angular#1.5.0 public/vendor/angular
+
+
