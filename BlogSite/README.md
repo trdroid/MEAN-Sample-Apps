@@ -323,7 +323,7 @@ Install angular and its modules
     
     angular#1.5.0 public/vendor/angular
 
-Explore the update bower.json file
+Explore the updated bower.json file
 
 <i>BlogSite/bower.json</i>
 
@@ -348,3 +348,10 @@ Explore the update bower.json file
   }
 }
 ```
+
+Explore the project structure to find the client-side dependencies under public/vendor directory
+
+<i>BlogSite/public/vendor</i>
+
+<img src="_misc/installed%20client-side%20dependencies.png"/>
+
