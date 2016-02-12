@@ -323,7 +323,7 @@ Install angular and its modules
     
     angular#1.5.0 public/vendor/angular
 
-Explore the update bower.json file
+Explore the updated bower.json file
 
 <i>BlogSite/bower.json</i>
 
@@ -348,3 +348,22 @@ Explore the update bower.json file
   }
 }
 ```
+
+Explore the project structure to find the client-side dependencies under public/vendor directory
+
+<i>BlogSite/public/vendor</i>
+
+<img src="_misc/installed%20client-side%20dependencies.png"/>
+
+> /BlogSite$ npm install nodemon -g
+
+	nodemon@1.8.1 /home/droid/software/node/node-v4.2.2-linux-x64/lib/node_modules/nodemon
+	├── undefsafe@0.0.3
+	├── es6-promise@3.0.2
+	├── debug@2.2.0 (ms@0.7.1)
+	├── minimatch@3.0.0 (brace-expansion@1.1.3)
+	├── touch@1.0.0 (nopt@1.0.10)
+	├── lodash.defaults@3.1.2 (lodash.restparam@3.6.1, lodash.assign@3.2.0)
+	├── ps-tree@1.0.1 (event-stream@3.3.2)
+	├── update-notifier@0.5.0 (is-npm@1.0.0, semver-diff@2.1.0, string-length@1.0.1, chalk@1.1.1, repeating@1.1.3, configstore@1.4.0, latest-version@1.0.1)
+	└── chokidar@1.4.2 (path-is-absolute@1.0.0, inherits@2.0.1, async-each@0.1.6, glob-parent@2.0.0, is-glob@2.0.1, is-binary-path@1.0.1, readdirp@2.0.0, anymatch@1.3.0)
