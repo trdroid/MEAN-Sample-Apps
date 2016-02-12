@@ -349,6 +349,8 @@ Explore the updated bower.json file
 }
 ```
 
+### Install nodemon globally
+
 Explore the project structure to find the client-side dependencies under public/vendor directory
 
 <i>BlogSite/public/vendor</i>
@@ -367,3 +369,4 @@ Explore the project structure to find the client-side dependencies under public/
 	├── ps-tree@1.0.1 (event-stream@3.3.2)
 	├── update-notifier@0.5.0 (is-npm@1.0.0, semver-diff@2.1.0, string-length@1.0.1, chalk@1.1.1, repeating@1.1.3, configstore@1.4.0, latest-version@1.0.1)
 	└── chokidar@1.4.2 (path-is-absolute@1.0.0, inherits@2.0.1, async-each@0.1.6, glob-parent@2.0.0, is-glob@2.0.1, is-binary-path@1.0.1, readdirp@2.0.0, anymatch@1.3.0)
+
