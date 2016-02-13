@@ -349,13 +349,13 @@ Explore the updated bower.json file
 }
 ```
 
-### Install nodemon globally
-
 Explore the project structure to find the client-side dependencies under public/vendor directory
 
 <i>BlogSite/public/vendor</i>
 
 <img src="_misc/installed%20client-side%20dependencies.png"/>
+
+### Install nodemon globally
 
 > /BlogSite$ npm install nodemon -g
 
@@ -370,3 +370,34 @@ Explore the project structure to find the client-side dependencies under public/
 	├── update-notifier@0.5.0 (is-npm@1.0.0, semver-diff@2.1.0, string-length@1.0.1, chalk@1.1.1, repeating@1.1.3, configstore@1.4.0, latest-version@1.0.1)
 	└── chokidar@1.4.2 (path-is-absolute@1.0.0, inherits@2.0.1, async-each@0.1.6, glob-parent@2.0.0, is-glob@2.0.1, is-binary-path@1.0.1, readdirp@2.0.0, anymatch@1.3.0)
 
+### Install more dependencies 
+
+> /BlogSite$ npm install body-parser stylus morgan --save
+
+	npm WARN package.json blogsite@1.0.0 No repository field.
+	morgan@1.6.1 node_modules/morgan
+	├── on-headers@1.0.1
+	├── basic-auth@1.0.3
+	├── depd@1.0.1
+	├── on-finished@2.3.0 (ee-first@1.1.1)
+	└── debug@2.2.0 (ms@0.7.1)
+	
+	body-parser@1.15.0 node_modules/body-parser
+	├── content-type@1.0.1
+	├── bytes@2.2.0
+	├── depd@1.1.0
+	├── on-finished@2.3.0 (ee-first@1.1.1)
+	├── qs@6.1.0
+	├── debug@2.2.0 (ms@0.7.1)
+	├── iconv-lite@0.4.13
+	├── raw-body@2.1.5 (unpipe@1.0.0)
+	├── http-errors@1.4.0 (inherits@2.0.1, statuses@1.2.1)
+	└── type-is@1.6.11 (media-typer@0.3.0, mime-types@2.1.9)
+	
+	stylus@0.53.0 node_modules/stylus
+	├── css-parse@1.7.0
+	├── debug@2.2.0 (ms@0.7.1)
+	├── sax@0.5.8
+	├── source-map@0.1.43 (amdefine@1.0.0)
+	├── mkdirp@0.5.1 (minimist@0.0.8)
+	└── glob@3.2.11 (inherits@2.0.1, minimatch@0.3.0)
