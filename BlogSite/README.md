@@ -401,3 +401,8 @@ Explore the project structure to find the client-side dependencies under public/
 	├── source-map@0.1.43 (amdefine@1.0.0)
 	├── mkdirp@0.5.1 (minimist@0.0.8)
 	└── glob@3.2.11 (inherits@2.0.1, minimatch@0.3.0)
+
+### Verify setup
+
+<img src="_misc/check%20to%20see%20if%20js%20and%20css%20files%20are%20delivered.png"/>
+
