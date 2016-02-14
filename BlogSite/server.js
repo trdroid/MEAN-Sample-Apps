@@ -1,44 +1,21 @@
-var express = require('express'),
-	stylus = require('stylus'),
-	bodyParser = require('body-parser'),
-	morganLogger = require('morgan');
-
-var env = process.env.NODE_ENV = process.env.NODE_ENV || 'DEV';
+var express = require('express');
 
 var app = express();
 
-function compile(str, path) {
-	return stylus(str).set('filename', path);
-}
-
+/*
+	set the views property to the path where the views are located
+*/
 app.set('views', __dirname + '/server/views');
 
-//configure the view engine
+/*
+	configure the view engine
+*/	
 app.set('view engine', 'jade');
 
 /*
-	setup the middleware for stylus by passing in configuration object
-*/
-app.use(stylus.middleware({
-	src: __dirname + '/public',
-	compile: compile
-}));
+	a catch-all route handler to serve up the index page when a request is made to a path that the server does not handle
 
-app.use(morganLogger('dev'))
-
-app.use(bodyParser.urlencoded({extended: true}));
-app.use(bodyParser.json());
-
-//setup static routing to the public directory
-app.use(express.static(__dirname + '/public'));
-
-/*
-	a catch-all route handler
-
-	serve up an index page to the client and let angular take care of routing
-
-	In case of typos in the routes, angular could hang.
-	An alternative approach is to make the server and the angular be aware of all the routes and be able to handle them
+	The index page is served to the client where angular handles routing (as this is a single page application)
 */
 app.get('*', function(req, res) {
 	res.render('index');
