@@ -435,6 +435,16 @@ html
 	├── update-notifier@0.5.0 (is-npm@1.0.0, semver-diff@2.1.0, string-length@1.0.1, chalk@1.1.1, repeating@1.1.3, configstore@1.4.0, latest-version@1.0.1)
 	└── chokidar@1.4.2 (path-is-absolute@1.0.0, inherits@2.0.1, async-each@0.1.6, glob-parent@2.0.0, is-glob@2.0.1, is-binary-path@1.0.1, readdirp@2.0.0, anymatch@1.3.0)
 
+### Run the application
+
+> BlogSite$nodemon server.js
+
+	[nodemon] 1.8.1
+	[nodemon] to restart at any time, enter `rs`
+	[nodemon] watching: *.*
+	[nodemon] starting `node server.js`
+	Listening on port 8099...
+
 ### In the Browser
 
 <img src="_misc/initial%20step%20in%20the%20browser.png"/>
@@ -470,21 +480,6 @@ html
 	├── source-map@0.1.43 (amdefine@1.0.0)
 	├── mkdirp@0.5.1 (minimist@0.0.8)
 	└── glob@3.2.11 (inherits@2.0.1, minimatch@0.3.0)
-
-### Run the application
-
-> BlogSite$nodemon server.js
-
-	[nodemon] 1.8.1
-	[nodemon] to restart at any time, enter `rs`
-	[nodemon] watching: *.*
-	[nodemon] starting `node server.js`
-	Listening on port 8099...
-
-
-### Launch in Browser
-
-<img src="_misc/initial%20step%20in%20the%20browser.png"/>
 
 ### Verify setup
 
