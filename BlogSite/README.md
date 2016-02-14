@@ -356,6 +356,50 @@ Explore the project structure to find the client-side dependencies under public/
 <img src="_misc/installed%20client-side%20dependencies.png"/>
 
 
+### Starting with E & N in MEAN
+
+Create the server code in <i>BlogSite/server.js</i>
+
+```javascript
+var express = require('express');
+
+var app = express();
+
+/*
+	set the views property to the path where the views are located
+*/
+app.set('views', __dirname + '/server/views');
+
+/*
+	configure the view engine
+*/	
+app.set('view engine', 'jade');
+
+/*
+	a catch-all route handler to serve up the index page when a request is made to a path that the server does not handle
+
+	The index page is served to the client where angular handles routing (as this is a single page application)
+*/
+app.get('*', function(req, res) {
+	res.render('index');
+});
+
+var port = 8099;
+
+app.listen(port);
+console.log('Listening on port ' + port + '...');
+```
+
+Create <i>BlogSite/server/views</i> to house the views
+
+Create <i>BlogSite/server/views/index.jade</i> for the index page
+
+```jade
+doctype
+html
+	body
+		h1 Welcome
+```
 
 ### Install nodemon globally
 
@@ -371,6 +415,10 @@ Explore the project structure to find the client-side dependencies under public/
 	├── ps-tree@1.0.1 (event-stream@3.3.2)
 	├── update-notifier@0.5.0 (is-npm@1.0.0, semver-diff@2.1.0, string-length@1.0.1, chalk@1.1.1, repeating@1.1.3, configstore@1.4.0, latest-version@1.0.1)
 	└── chokidar@1.4.2 (path-is-absolute@1.0.0, inherits@2.0.1, async-each@0.1.6, glob-parent@2.0.0, is-glob@2.0.1, is-binary-path@1.0.1, readdirp@2.0.0, anymatch@1.3.0)
+
+### In the Browser
+
+
 
 ### Install more dependencies 
 
