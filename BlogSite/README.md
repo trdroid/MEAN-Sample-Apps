@@ -376,9 +376,7 @@ app.set('views', __dirname + '/server/views');
 app.set('view engine', 'jade');
 
 /*
-	a catch-all route handler to serve up the index page when a request is made to a path that the server does not handle
-
-	The index page is served to the client where angular handles routing (as this is a single page application)
+	a catch-all route handler matches all routes and serves up the index page (/servers/views/index.jade)
 */
 app.get('*', function(req, res) {
 	res.render('index');
@@ -389,6 +387,17 @@ var port = 8099;
 app.listen(port);
 console.log('Listening on port ' + port + '...');
 ```
+
+The catch-all route handler (with '*' in get) matches all routes. The purpose of this page is to serve up the index page 
+(/servers/views/index.jade) for any request that the server does not have a route handler for. 
+
+Any request (for JavaScript, CSS, images etc.) that is not handled by any route handler that would be defined before the catch-all route handler gets handled by the catch-all route handler, which serves the index page (/servers/views/index.jade) to the client.
+
+This is done to avoid setting up the same routes on both the client and the server side. The client can be programmed to handle routing (with angular) without having to coordinate with the server. For the routes that the server does not handle, it simply serves up the index page to the client which handles the routing.
+
+For example, when a client requests for /blogs, the server side serves the index page as it does not handle that route, which allows client to handle that route.
+
+
 
 Create <i>BlogSite/server/views</i> to house the views
 
