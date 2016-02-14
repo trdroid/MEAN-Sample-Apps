@@ -418,7 +418,7 @@ html
 
 ### In the Browser
 
-
+<img src="_misc/initial%20step%20in%20the%20browser.png"/>
 
 ### Install more dependencies 
 
