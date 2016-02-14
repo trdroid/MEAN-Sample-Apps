@@ -358,7 +358,7 @@ Explore the project structure to find the client-side dependencies under public/
 
 ### Starting with E & N in MEAN
 
-Create the server code in <i>BlogSite/server.js</i>
+<b>Create the server code in <i>BlogSite/server.js</i></b>
 
 ```javascript
 var express = require('express');
@@ -388,16 +388,22 @@ app.listen(port);
 console.log('Listening on port ' + port + '...');
 ```
 
-The catch-all route handler (with '*' in get) matches all routes. The purpose of this page is to serve up the index page 
+The catch-all route handler (with '*' in get) matches all routes. The purpose of this route handler is to serve up the index page 
 (/servers/views/index.jade) for any request that the server does not have a route handler for. 
 
-Any request (for JavaScript, CSS, images etc.) that is not handled by any route handler that would be defined before the catch-all route handler gets handled by the catch-all route handler, which serves the index page (/servers/views/index.jade) to the client.
+Any request (for JavaScript, CSS, images etc.) that is not handled by any route handler defined before the catch-all route handler gets handled by the catch-all route handler, which serves the index page (/servers/views/index.jade) to the client.
 
-This is done to avoid setting up the same routes on both the client and the server side. The client can be programmed to handle routing (with angular) without having to coordinate with the server. For the routes that the server does not handle, it simply serves up the index page to the client which handles the routing.
+This is done to avoid setting up the same routes on both the client and the server side. The client can be programmed to handle routing (with angular) without having to coordinate with the server. For the routes that the server does not handle, it simply serves up the index page to the client which handles the routing. It then becomes the client's responsibility to handle 404 cases. 
 
-For example, when a client requests for /blogs, the server side serves the index page as it does not handle that route, which allows client to handle that route.
+For example, when a client requests for /blogs, the server serves the index page as it is not defined to handle that route. This allows the client-side to handle that route to show appropriate content. 
 
+<i>Risks Involved</i>
 
+Imagine if there is a typo in one of the routes, this setup would end up with Angular hanging or resulting in the infinite digests error message.
+
+A solution is to use an approach where every route handled by the client is also handled by the server. 
+
+<b>Next Steps</b>
 
 Create <i>BlogSite/server/views</i> to house the views
 
@@ -409,6 +415,10 @@ html
 	body
 		h1 Welcome
 ```
+
+### Project Structure
+
+<img src="_misc/server%20app%20and%20server%20views%20project%20structure.png"/>
 
 ### Install nodemon globally
 
