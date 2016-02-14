@@ -149,7 +149,7 @@ Installing express and jade with the --save flag allowed them to be added to the
 
 Get Bower
 
-Because bower is used to install client-side dependencies, either install it globally or as a development ONLY dependency, as it is not required in production. 
+Bower is used to install client-side dependencies. Install it globally or as a development ONLY dependency, as it is not required in production. 
 
 > $ npm install bower -g
 
@@ -207,6 +207,8 @@ Define an object with the key "directory" specifying where to install client-sid
 
 <b> Create bower.json file </b>
 
+Creates bower.json file by running <i>bower init</i> to hold information about client-side dependencies.
+
 > BlogSite$ ./node_modules/.bin/bower init
 
     ? name blogsite
@@ -235,8 +237,6 @@ Define an object with the key "directory" specifying where to install client-sid
     }
     
     ? Looks good? Yes
-
-This creates bower.json file
 
 <i>BlogSite/bower.json</i>
 
@@ -354,6 +354,8 @@ Explore the project structure to find the client-side dependencies under public/
 <i>BlogSite/public/vendor</i>
 
 <img src="_misc/installed%20client-side%20dependencies.png"/>
+
+
 
 ### Install nodemon globally
 
