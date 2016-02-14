@@ -471,6 +471,21 @@ html
 	├── mkdirp@0.5.1 (minimist@0.0.8)
 	└── glob@3.2.11 (inherits@2.0.1, minimatch@0.3.0)
 
+### Run the application
+
+> BlogSite$nodemon server.js
+
+	[nodemon] 1.8.1
+	[nodemon] to restart at any time, enter `rs`
+	[nodemon] watching: *.*
+	[nodemon] starting `node server.js`
+	Listening on port 8099...
+
+
+### Launch in Browser
+
+<img src="_misc/initial%20step%20in%20the%20browser.png"/>
+
 ### Verify setup
 
 <img src="_misc/check%20to%20see%20if%20js%20and%20css%20files%20are%20delivered.png"/>
