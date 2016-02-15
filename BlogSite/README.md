@@ -666,6 +666,10 @@ p {{ content }}
 
 <img src="_misc/new%20files%20with%20angular%20app%20and%20partials.png"/>
 
+### Flow
+
+<img src="_misc/entire%20flow%202.png"/>
+
 ### Starting with M in MEAN
 
 Install mongoose 
@@ -703,18 +707,13 @@ Notice the dependency added to <i>BlogSite/package.json</i>
   "dependencies": {
     "express": "^4.13.4",
     "jade": "^1.11.0",
-    "mongoose": "^4.4.3"  <------
+    "mongoose": "^4.4.3"  ------
   },
   "devDependencies": {
     "bower": "^1.7.7"
   }
 }
 ```
-
-
-### Flow
-
-<img src="_misc/entire%20flow%202.png"/>
 
 ### Install more dependencies 
 
