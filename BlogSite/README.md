@@ -624,7 +624,16 @@ app.set('view engine', 'jade');
 */
 app.use(express.static(__dirname + '/public'));
 
-app.get('/partials/:path', function(req, res) {             <-------------------
+/*
+	The angular app sends XHR requests to /partials/:path, which are handled here.
+
+	For example, a request to /partials/root implies that req.params.path is root, which then 
+		attempts to render partials/root.jade. Since the views are configured to be found from /server/views
+		directory, the file /server/views/partials/root.jade would be rendered
+
+	The partials are therefore organized under /server/views/partials directory
+*/
+app.get('/partials/:path', function(req, res) {
 	res.render('partials/' + req.params.path);
 });
 
