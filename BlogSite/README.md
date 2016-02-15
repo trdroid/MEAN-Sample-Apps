@@ -463,7 +463,7 @@ index.jade extends layouts/main_layout.jade and provides its view-specific conte
 
 Each <i>script</i> entry in "script.jade" layout results in a request to the server, so our server.js app should be able to handle the requests to these static files. 
 
-To handle this, setup static route to the public directory (BlogSite/public) by using express's static middleware
+To handle this, setup static route to the public directory (BlogSite/public) in <i>BlogSite/server.js</i> by using express's static middleware
 
 ```javascript
 var express = require('express');
@@ -500,7 +500,7 @@ app.listen(port);
 console.log('Listening on port ' + port + '...');
 ```
 
-Now, 
+Now, when the server receives a request to /vendor/angular/angular.js, the static middleware it is configured with attempts to find it under BlogSite/public directory i.e. it looks for the file BlogSite/public/vendor/angular/angular.js and returns it to the client.
 
 ### Install more dependencies 
 
