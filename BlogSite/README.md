@@ -951,3 +951,5 @@ Switch to "blogsite" database and create an entry in the "blogs" table.
 
 ### In Browser
 
+<img src="_misc/passing%20first%20blog%20to%20index.png"/>
+
