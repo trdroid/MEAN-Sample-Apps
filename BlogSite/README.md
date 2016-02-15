@@ -459,7 +459,48 @@ html
 
 index.jade extends layouts/main_layout.jade and provides its view-specific content which replaces the <i>block</i> in layouts/main_layout.jade
 
-3) In layouts/main_layout.jade, the <i>include</i> followed by another layout's name "scripts" includes the content of the layout "scripts" in layouts/main_layout.jade
+3) In layouts/main_layout.jade, the <i>include</i> followed by another layout's name "scripts.jade" includes the content of the layout "scripts.jade" in layouts/main_layout.jade
+
+Each <i>script</i> entry in "script.jade" layout results in a request to the server, so our server.js app should be able to handle the requests to these static files. 
+
+To handle this, setup static route to the public directory (BlogSite/public) by using express's static middleware
+
+```javascript
+var express = require('express');
+
+var app = express();
+
+/*
+	set the views property to the path where the views are located
+*/
+app.set('views', __dirname + '/server/views');
+
+/*
+	configure the view engine
+*/	
+app.set('view engine', 'jade');
+
+/*
+	setup static routing to the public directory (BlogSite/public) by using express's static middleware
+*/
+app.use(express.static(__dirname + '/public'));  <-----------------------
+
+/*
+	a catch-all route handler to serve up the index page when a request is made to a path that the server does not handle
+
+	The index page is served to the client where angular handles routing (as this is a single page application)
+*/
+app.get('*', function(req, res) {
+	res.render('index');
+});
+
+var port = 8099;
+
+app.listen(port);
+console.log('Listening on port ' + port + '...');
+```
+
+Now, 
 
 ### Install more dependencies 
 
