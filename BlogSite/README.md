@@ -738,14 +738,17 @@ app.set('view engine', 'jade');
 */
 app.use(express.static(__dirname + '/public'));
 			<-------------------------------------------------
-mongoose.connect('mongodb://localhost/blogs');
+/*
+	connect to blogsite database on the local mongoDB server
+*/
+mongoose.connect('mongodb://localhost/blogsite');
 
 var db = mongoose.connection;
 
 db.on('error', console.error.bind(console, 'Failed to connect. Error occurred ...'));
 
 db.once('open', function() {
-	console.log('Connected to blogs database');
+	console.log('Connected to blogsite database');
 });
 			<-------------------------------------------------
 /*
@@ -783,38 +786,150 @@ Check the nodemon console for the console messages to see if the connection to d
 	[nodemon] restarting due to changes...
 	[nodemon] starting `node server.js`
 	Listening on port 8099...
-	Connected to blogs database
+	Connected to blogsite database
 
 
-### Install more dependencies 
+<b>Create a schema and a model</b>
 
-> /BlogSite$ npm install body-parser stylus morgan --save
+```javascript
+var express = require('express'),
+	mongoose = require('mongoose');
 
-	npm WARN package.json blogsite@1.0.0 No repository field.
-	morgan@1.6.1 node_modules/morgan
-	├── on-headers@1.0.1
-	├── basic-auth@1.0.3
-	├── depd@1.0.1
-	├── on-finished@2.3.0 (ee-first@1.1.1)
-	└── debug@2.2.0 (ms@0.7.1)
+var app = express();
+
+/*
+	set the views property to the path where the views are located
+*/
+app.set('views', __dirname + '/server/views');
+
+/*
+	configure the view engine
+*/	
+app.set('view engine', 'jade');
+
+/*
+	setup static routing to the public directory (BlogSite/public) by using express's static middleware
+*/
+app.use(express.static(__dirname + '/public'));
+
+mongoose.connect('mongodb://localhost/blogsite');
+
+var db = mongoose.connection;
+
+db.on('error', console.error.bind(console, 'Failed to connect. Error occurred ...'));
+
+db.once('open', function() {
+	console.log('Connected to blogsite database');
+});
+<------------------------------------
+/*
+	Create a schema for blogs
+
+	Column names and Column types
+*/
+var blogSchema = mongoose.Schema({
+		title: String, 
+		content: String
+	});
+
+
+/*
+	Create a Blog model out of blogSchema
+
+	Pass in the collection name and the schema
+
+	Mongoose processes the collection name i.e. 
+		it makes the first letter small and 
+		pluralizes the collection name
+	to represent the collection in the database
 	
-	body-parser@1.15.0 node_modules/body-parser
-	├── content-type@1.0.1
-	├── bytes@2.2.0
-	├── depd@1.1.0
-	├── on-finished@2.3.0 (ee-first@1.1.1)
-	├── qs@6.1.0
-	├── debug@2.2.0 (ms@0.7.1)
-	├── iconv-lite@0.4.13
-	├── raw-body@2.1.5 (unpipe@1.0.0)
-	├── http-errors@1.4.0 (inherits@2.0.1, statuses@1.2.1)
-	└── type-is@1.6.11 (media-typer@0.3.0, mime-types@2.1.9)
-	
-	stylus@0.53.0 node_modules/stylus
-	├── css-parse@1.7.0
-	├── debug@2.2.0 (ms@0.7.1)
-	├── sax@0.5.8
-	├── source-map@0.1.43 (amdefine@1.0.0)
-	├── mkdirp@0.5.1 (minimist@0.0.8)
-	└── glob@3.2.11 (inherits@2.0.1, minimatch@0.3.0)
+	so, the collection name "Blog" represents "blogs" in the "blogsite" database
+*/
+var Blog = mongoose.model('Blog', blogSchema);
+
+var firstBlog;
+
+/*
+	Get the first document from the "blogs" collection
+
+	findOne() without any parameters returns the first document in the collection.
+	findOne() can be specified to execute a callback function on data return using the exec() method 
+		by passing in the callback to execute
+
+	The callback is passed two arguments: error if any and the first document in the collection
+*/
+Blog.findOne().exec(function(err, blogEntry) {
+	firstBlog = blogEntry;
+});
+<------------------------------------
+/*
+	The angular app sends XHR requests to /partials/:path, which are handled here.
+
+	For example, a request to /partials/root implies that req.params.path is root, which then 
+		attempts to render partials/root.jade. Since the views are configured to be found from /server/views
+		directory, the file /server/views/partials/root.jade would be rendered
+
+	The partials are therefore organized under /server/views/partials directory
+*/
+app.get('/partials/:path', function(req, res) {
+	res.render('partials/' + req.params.path);
+});
+
+/*
+	a catch-all route handler to serve up the index page when a request is made to a path that the server does not handle
+
+	The index page is served to the client where angular handles routing (as this is a single page application)
+*/
+app.get('*', function(req, res) {
+	/*
+		The following did not work
+
+		blogEntry: firstBlog
+
+		Tried passing a model object to index.jade and tried accessing title and content properties as
+			blogEntry.title and blogEntry.content in index.jade, which resulted in an error				
+
+
+	*/
+
+	/*
+		pass an object with title and content properties to index.jade
+	*/
+	res.render('index', {
+		title: firstBlog.title,
+		content: firstBlog.content
+	});
+});
+
+var port = 8099;
+
+app.listen(port);
+console.log('Listening on port ' + port + '...');
+```
+<b> Creating an entry in MongoDB </b>
+
+Because server.js attempts to  
+
+> $ mongo
+
+	MongoDB shell version: 3.2.1
+	connecting to: test
+	Server has startup warnings: 
+	2016-02-13T22:35:01.282-0500 I CONTROL  [initandlisten] 
+	2016-02-13T22:35:01.282-0500 I CONTROL  [initandlisten] ** WARNING: /sys/kernel/mm/transparent_hugepage/enabled is 'always'.
+	2016-02-13T22:35:01.282-0500 I CONTROL  [initandlisten] **        We suggest setting it to 'never'
+	2016-02-13T22:35:01.282-0500 I CONTROL  [initandlisten] 
+	2016-02-13T22:35:01.282-0500 I CONTROL  [initandlisten] ** WARNING: /sys/kernel/mm/transparent_hugepage/defrag is 'always'.
+	2016-02-13T22:35:01.282-0500 I CONTROL  [initandlisten] **        We suggest setting it to 'never'
+	2016-02-13T22:35:01.282-0500 I CONTROL  [initandlisten] 
+
+Switch to "blogsite" database and create an entry in the "blogs" table.
+
+	> use blogsite
+	switched to db blogsite
+	> db.blogs.insert({title: 'My First Blog Ever', content: 'Welcome! Thank you for visiting my blog!'})
+	WriteResult({ "nInserted" : 1 })
+	> db.blogs.find()
+	{ "_id" : ObjectId("56c22492c74024b8af7c761c"), "title" : "My First Blog Ever", "content" : "Welcome! Thank you for visiting my blog!" }
+	> 
 
