@@ -502,6 +502,12 @@ console.log('Listening on port ' + port + '...');
 
 Now, when the server receives a request to /vendor/angular/angular.js, the static middleware it is configured with attempts to find it under BlogSite/public directory i.e. it looks for the file BlogSite/public/vendor/angular/angular.js and returns it to the client.
 
+### In the Browser
+
+Check in the browser to see if the scripts are being loaded 
+
+<img src="_misc/check%20to%20see%20if%20js%20and%20css%20files%20are%20delivered.png"/>
+
 ### Install more dependencies 
 
 > /BlogSite$ npm install body-parser stylus morgan --save
