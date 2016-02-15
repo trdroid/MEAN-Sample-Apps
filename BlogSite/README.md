@@ -633,7 +633,7 @@ app.use(express.static(__dirname + '/public'));
 
 	The partials are therefore organized under /server/views/partials directory
 */
-app.get('/partials/:path', function(req, res) {
+app.get('/partials/:path', function(req, res) {             <--------------------
 	res.render('partials/' + req.params.path);
 });
 
@@ -651,6 +651,22 @@ var port = 8099;
 app.listen(port);
 console.log('Listening on port ' + port + '...');
 ```
+
+Create <i>BlogSite/server/views/partials/root.jade</i> that will be served to the angular app's XHR.
+
+```jade
+h1 {{ title }}
+
+p {{ content }}
+```
+
+<b> Changes included </b>
+
+<img src="_misc/new%20files%20with%20angular%20app%20and%20partials.png"/>
+
+### Flow
+
+<img src="_misc/entire%20flow%202.png"/>
 
 ### Install more dependencies 
 
