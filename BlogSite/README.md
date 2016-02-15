@@ -506,7 +506,7 @@ Now, when the server receives a request to /vendor/angular/angular.js, the stati
 
 Check in the browser to see if the scripts are being loaded 
 
-<img src="_misc/check%20to%20see%20if%20js%20and%20css%20files%20are%20delivered.png"/>
+<img src="_misc/in%20browser%20with%20scripts%20delivered.png"/>
 
 ### Install more dependencies 
 
