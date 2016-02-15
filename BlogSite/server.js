@@ -13,6 +13,11 @@ app.set('views', __dirname + '/server/views');
 app.set('view engine', 'jade');
 
 /*
+	setup static routing to the public directory (BlogSite/public) by using express's static middleware
+*/
+app.use(express.static(__dirname + '/public'));
+
+/*
 	a catch-all route handler to serve up the index page when a request is made to a path that the server does not handle
 
 	The index page is served to the client where angular handles routing (as this is a single page application)
