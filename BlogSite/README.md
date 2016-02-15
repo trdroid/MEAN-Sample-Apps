@@ -518,6 +518,8 @@ Create a folder <i>BlogSite/public/client</i> to host the angular application fi
 
 Create <i>BlogSite/public/client/app.js</i>, which is the entry point of the Angular application.
 
+Create a module 'app' in <i>BlogSite/public/client/app.js</i>
+
 ```javascript
 /*
 	The main entry point to the Angular application
@@ -567,7 +569,36 @@ angular.module('app').controller('mainController', function($scope) {
 });
 ```
 
+Add ng-app to <i>BlogSite/server/layouts/main_layout.jade</i>
 
+```jade
+doctype
+html
+	head
+		base(href="/")
+	body(ng-app='app')           <---------------
+		block main-content
+		include scripts
+```
+
+Add ng-view to <i>BlogSite/server/views/index.jade</i>
+
+```jade
+extends ../layouts/main_layout
+
+block main-content
+	div(ng-view)         <-------------------
+```
+
+Add app.js to <i>BlogSite/server/layouts/scripts.jade</i>
+
+```jade
+script(type="text/javascript", src="/vendor/jquery/dist/jquery.js")
+script(type="text/javascript", src="/vendor/angular/angular.js")
+script(type="text/javascript", src="/vendor/angular-resource/angular-resource.js")
+script(type="text/javascript", src="/vendor/angular-route/angular-route.js")
+script(type="text/javascript", src="/client/app.js")  <------------------------------
+```
 
 ### Install more dependencies 
 
