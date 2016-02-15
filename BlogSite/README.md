@@ -791,6 +791,10 @@ Check the nodemon console for the console messages to see if the connection to d
 
 <b>Create a schema and a model</b>
 
+Create a schema and a model ("Blog") from it to read a document from the "blogs" collection in the "blogsite" database.
+
+Read the document and pass its attributes to "index.jade" to display them to the client.
+
 ```javascript
 var express = require('express'),
 	mongoose = require('mongoose');
@@ -887,15 +891,13 @@ app.get('*', function(req, res) {
 		blogEntry: firstBlog
 
 		Tried passing a model object to index.jade and tried accessing title and content properties as
-			blogEntry.title and blogEntry.content in index.jade, which resulted in an error				
-
-
+			blogEntry.title and blogEntry.content in index.jade, which resulted in an error			
 	*/
 
 	/*
 		pass an object with title and content properties to index.jade
 	*/
-	res.render('index', {
+	res.render('index', {          <------------------------------
 		title: firstBlog.title,
 		content: firstBlog.content
 	});
@@ -908,7 +910,7 @@ console.log('Listening on port ' + port + '...');
 ```
 <b> Creating an entry in MongoDB </b>
 
-Because server.js attempts to  
+Because server.js attempts to find a document from the "blogs" collection in the "blogsite" database, create an entry in the database.
 
 > $ mongo
 
