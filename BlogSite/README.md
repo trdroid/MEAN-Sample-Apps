@@ -569,6 +569,8 @@ angular.module('app').controller('mainController', function($scope) {
 });
 ```
 
+When the angular app is loaded, it makes an XHR request to the server. 
+
 Add ng-app to <i>BlogSite/server/layouts/main_layout.jade</i>
 
 ```jade
@@ -602,7 +604,7 @@ script(type="text/javascript", src="/client/app.js")  <-------------------------
 
 <b> Changes in the server app </b>
 
-The server has to handle the request to <i>partials/root</i> made from the angular app
+The server has to handle the request to <i>partials/root</i> made from the angular app.
 
 ```javascript
 var express = require('express');
