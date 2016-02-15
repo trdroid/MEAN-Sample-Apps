@@ -909,7 +909,7 @@ app.listen(port);
 console.log('Listening on port ' + port + '...');
 ```
 
-<b> Changing <i>BlogSite/server/views/index.jade</i> <b>
+<b> Changing <i>BlogSite/server/views/index.jade</i> </b>
 
 Include the attributes of the first blog (title and content) in the output
 
@@ -948,4 +948,6 @@ Switch to "blogsite" database and create an entry in the "blogs" table.
 	> db.blogs.find()
 	{ "_id" : ObjectId("56c22492c74024b8af7c761c"), "title" : "My First Blog Ever", "content" : "Welcome! Thank you for visiting my blog!" }
 	> 
+
+### In Browser
 
