@@ -908,6 +908,20 @@ var port = 8099;
 app.listen(port);
 console.log('Listening on port ' + port + '...');
 ```
+
+<b> Changing <i>BlogSite/server/views/index.jade</i> <b>
+
+Include the attributes of the first blog (title and content) in the output
+
+```jade
+extends ../layouts/main_layout
+
+block main-content
+	div(ng-view)
+	h2= title
+	h2= content	
+```
+
 <b> Creating an entry in MongoDB </b>
 
 Because server.js attempts to find a document from the "blogs" collection in the "blogsite" database, create an entry in the database.
