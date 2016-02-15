@@ -508,6 +508,14 @@ Check in the browser to see if the scripts are being loaded
 
 <img src="_misc/in%20browser%20with%20scripts%20delivered.png"/>
 
+### Flow
+
+<img src="_misc/entire%20flow%201.png"/>
+
+### Starting with A in MEAN
+
+
+
 ### Install more dependencies 
 
 > /BlogSite$ npm install body-parser stylus morgan --save
