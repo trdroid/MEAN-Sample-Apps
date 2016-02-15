@@ -576,7 +576,7 @@ doctype
 html
 	head
 		base(href="/")
-	body(ng-app='app')           <---------------
+	body(ng-app='app')           <!--------------->
 		block main-content
 		include scripts
 ```
@@ -587,7 +587,7 @@ Add ng-view to <i>BlogSite/server/views/index.jade</i>
 extends ../layouts/main_layout
 
 block main-content
-	div(ng-view)         <-------------------
+	div(ng-view)          <!--------------->
 ```
 
 Add app.js to <i>BlogSite/server/layouts/scripts.jade</i>
