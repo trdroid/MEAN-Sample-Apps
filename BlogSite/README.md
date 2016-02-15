@@ -666,6 +666,52 @@ p {{ content }}
 
 <img src="_misc/new%20files%20with%20angular%20app%20and%20partials.png"/>
 
+### Starting with M in MEAN
+
+Install mongoose 
+
+> BlogSite$ npm install mongoose --save
+
+	npm WARN package.json blogsite@1.0.0 No repository field.
+	mongoose@4.4.3 node_modules/mongoose
+	├── sliced@1.0.1
+	├── hooks-fixed@1.1.0
+	├── ms@0.7.1
+	├── regexp-clone@0.0.1
+	├── muri@1.1.0
+	├── mpromise@0.5.5
+	├── async@1.5.2
+	├── kareem@1.0.1
+	├── mpath@0.2.1
+	├── bson@0.4.21
+	├── mquery@1.6.3 (debug@2.2.0, sliced@0.0.5, bluebird@2.9.26)
+	└── mongodb@2.1.6 (es6-promise@3.0.2, readable-stream@1.0.31, mongodb-core@1.3.1)
+
+Notice the dependency added to <i>BlogSite/package.json</i>
+
+```json
+{
+  "name": "blogsite",
+  "version": "1.0.0",
+  "description": "A sample blogs site",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "gruprog",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.13.4",
+    "jade": "^1.11.0",
+    "mongoose": "^4.4.3"  <------
+  },
+  "devDependencies": {
+    "bower": "^1.7.7"
+  }
+}
+```
+
+
 ### Flow
 
 <img src="_misc/entire%20flow%202.png"/>
