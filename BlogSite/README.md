@@ -514,6 +514,59 @@ Check in the browser to see if the scripts are being loaded
 
 ### Starting with A in MEAN
 
+Create a folder <i>BlogSite/public/client</i> to host the angular application files.
+
+Create <i>BlogSite/public/client/app.js</i>, which is the entry point of the Angular application.
+
+```javascript
+/*
+	The main entry point to the Angular application
+
+	define module 'app' that depends on ngResource and ngRoute modules
+*/
+
+angular.module('app', ['ngResource', 'ngRoute']);
+
+/*
+	Define the client-side routes by calling the config function and requiring $routeProvider and $locationProvider
+*/
+angular.module('app').config(function($routeProvider, $locationProvider) {
+	/*
+		use $locationProvider to turn on HTML5 mode for routing
+
+		With recent versions of Angular, the head tag requires a base tag base(href="/") for routing to work properly.
+
+		so, server/layouts/main_layout.jade would look like:
+
+		doctype
+		html
+			head
+				base(href="/")  <-----------
+			body
+				block main-content
+				include scripts	
+	*/
+	$locationProvider.html5Mode(true);
+
+	/*
+		Use $routeProvider to define the routes
+	*/
+
+	$routeProvider
+		.when('/', { templateUrl: 'partials/root', controller: 'mainController'});
+		/* 
+			when the routing system determines that the value of location.path() is '/', it will inject the template 'partials/root' 
+			(or more precisely, it makes an XHR request to partials/root and injects its response)
+			into the ngView directive and makes 'mainController' its controller
+		*/
+});
+
+angular.module('app').controller('mainController', function($scope) {
+	$scope.title = "My First Blog";
+	$scope.content = "Welcome to my first blog";
+});
+```
+
 
 
 ### Install more dependencies 
@@ -547,8 +600,4 @@ Check in the browser to see if the scripts are being loaded
 	├── source-map@0.1.43 (amdefine@1.0.0)
 	├── mkdirp@0.5.1 (minimist@0.0.8)
 	└── glob@3.2.11 (inherits@2.0.1, minimatch@0.3.0)
-
-### Verify setup
-
-<img src="_misc/check%20to%20see%20if%20js%20and%20css%20files%20are%20delivered.png"/>
 
