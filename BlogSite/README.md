@@ -449,6 +449,18 @@ html
 
 <img src="_misc/initial%20step%20in%20the%20browser.png"/>
 
+### Organizing view in layouts
+
+<img src="_misc/initial%20layouts.png"/>
+
+1) index.jade extends layouts/main_layout.jade, which provides a general layout which can be extended to provide view-specific content.
+
+2) layouts/main_layout.jade defines a <i>block</i> called "main-content" which other layouts that extends this layout can redefine with the view-specific content which replaces the <i>block</i> in layouts/main_layout.jade
+
+index.jade extends layouts/main_layout.jade and provides its view-specific content which replaces the <i>block</i> in layouts/main_layout.jade
+
+3) In layouts/main_layout.jade, the <i>include</i> followed by another layout's name "scripts" includes the content of the layout "scripts" in layouts/main_layout.jade
+
 ### Install more dependencies 
 
 > /BlogSite$ npm install body-parser stylus morgan --save
