@@ -1121,6 +1121,8 @@ As soon as the file is saved, nodemon runs it ending up creating default users. 
 	{ "_id" : ObjectId("56c274a8f029d24e47b34ea2"), "username" : "iphone", "firstName" : "Swift", "lastName" : "ObjectiveC", "__v" : 0 }
 	{ "_id" : ObjectId("56c274a8f029d24e47b34ea1"), "username" : "android", "firstName" : "Alphabet", "lastName" : "Google", "__v" : 0 }
 
+### In Browser
+
 
 ### Installing necessary modules
 
@@ -1163,8 +1165,6 @@ As soon as the file is saved, nodemon runs it ending up creating default users. 
 	├── http-errors@1.4.0 (statuses@1.2.1, inherits@2.0.1)
 	├── debug@2.2.0 (ms@0.7.1)
 	└── type-is@1.6.11 (media-typer@0.3.0, mime-types@2.1.10)
-
-### In Browser
 
 ### Changes to server app
 
