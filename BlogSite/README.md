@@ -1123,6 +1123,7 @@ As soon as the file is saved, nodemon runs it ending up creating default users. 
 
 ### In Browser
 
+<img src="_misc/login%20form%20in%20browser.png"/>
 
 ### Installing necessary modules
 
