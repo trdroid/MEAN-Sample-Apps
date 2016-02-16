@@ -1,3 +1,4 @@
-h1 {{ title }}
-
-p {{ content }}
+form
+	input(placeholder="Email", ng-model="username")
+	input(type="password", placeholder="Password", ng-model="password")
+	button(ng-click="signin(username, password)") Sign In
