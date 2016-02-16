@@ -978,6 +978,9 @@ extends ../layouts/main_layout
 block main-content
 	div(ng-view)
 ```
+### In Browser
+
+<img src="_misc/login%20form%20in%20browser.png"/>
 
 ### Creating default users
 
@@ -1120,10 +1123,6 @@ As soon as the file is saved, nodemon runs it ending up creating default users. 
 	{ "_id" : ObjectId("56c274a8f029d24e47b34ea0"), "username" : "blackberry", "firstName" : "Rim", "lastName" : "blackberry", "__v" : 0 }
 	{ "_id" : ObjectId("56c274a8f029d24e47b34ea2"), "username" : "iphone", "firstName" : "Swift", "lastName" : "ObjectiveC", "__v" : 0 }
 	{ "_id" : ObjectId("56c274a8f029d24e47b34ea1"), "username" : "android", "firstName" : "Alphabet", "lastName" : "Google", "__v" : 0 }
-
-### In Browser
-
-<img src="_misc/login%20form%20in%20browser.png"/>
 
 ### Installing necessary modules
 
