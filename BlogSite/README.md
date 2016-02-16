@@ -953,3 +953,218 @@ Switch to "blogsite" database and create an entry in the "blogs" table.
 
 <img src="_misc/passing%20first%20blog%20to%20index.png"/>
 
+<hr>
+
+# Implementing Login
+
+### Creating a form
+
+As soon as <i>BlogSite/public/client/app.js</i> (our angular app) loads in the browser, an XHR is made to /partials/root which renders <i>BlogSite/server/views/partials/root.jade</i>. Modify <i>BlogSite/server/views/partials/root.jade</i> to contain a login form to send to the browser.
+
+<i>BlogSite/server/views/partials/root.jade</i>
+
+```jade
+form
+	input(placeholder="username", ng-model="username")
+	input(type="password", placeholder="Password", ng-model="password")
+	button(ng-click="signin(username, password)") Sign In
+```
+
+Also, modify <i>BlogSite/server/views/index.jade</i> to contain
+
+```jade
+extends ../layouts/main_layout
+
+block main-content
+	div(ng-view)
+```
+
+### Creating default users
+
+Remove earlier schema and model for blogs and also the first object being passed to index.jade. 
+
+Create schema and model for users.
+
+Check to see if users exist in the "users" collection in the "blogsite" database. If not, create default users.
+
+```javascript
+var express = require('express'),
+	mongoose = require('mongoose');
+
+var app = express();
+
+/*
+	set the views property to the path where the views are located
+*/
+app.set('views', __dirname + '/server/views');
+
+/*
+	configure the view engine
+*/	
+app.set('view engine', 'jade');
+
+/*
+	setup static routing to the public directory (BlogSite/public) by using express's static middleware
+*/
+app.use(express.static(__dirname + '/public'));
+
+/*
+	connect to blogsite database on the local mongoDB server
+*/
+mongoose.connect('mongodb://localhost/blogsite');
+
+var db = mongoose.connection;
+
+db.on('error', console.error.bind(console, 'Failed to connect. Error occurred ...'));
+
+db.once('open', function() {
+	console.log('Connected to blogsite database');
+});
+
+/*
+	Create a schema for users
+
+	Column names and Column types
+*/
+var userSchema = mongoose.Schema({
+		username: String,
+		firstName: String, 
+		lastName: String,		
+	});
+
+<-------------------------------------------------------------
+/*
+	Create a User model out of userSchema
+
+	Pass in the collection name and the schema
+
+	Mongoose processes the collection name i.e. 
+		it makes the first letter small and 
+		pluralizes the collection name
+	to represent the collection in the database
+	
+	so, the collection name "User" represents "users" in the "blogsite" database
+*/
+var User = mongoose.model('User', userSchema);
+
+var firstBlog;
+
+/*
+	Get all the documents from "users" collection by using the find() method on the "User" model
+
+	If there is no user collection, create default users
+*/
+User.find({}).exec(function(err, userCollection) {
+	if(userCollection.length == 0) {
+		/*
+			MAKE SURE THAT THE ATTRIBUTE NAMES OF DOCUMENT PASSED TO create() MATCHES WITH ATTRIBUTE NAMES
+			PASSED TO mongoose.Schema
+
+			Any typos would mean missing data.
+
+			For example, if the schema is defined with username as one of its attributes,
+				then passing userName (notice N is caps here) to create() method results in the actual 
+				userName attribute unfilled for that document
+		*/
+		User.create({username: 'blackberry', firstName: 'Rim', lastName: 'blackberry'});
+		User.create({username: 'android', firstName: 'Alphabet', lastName: 'Google'});
+		User.create({username: 'iphone', firstName: 'Swift', lastName: 'ObjectiveC'});
+	}
+});
+<-------------------------------------------------------------
+/*
+	The angular app sends XHR requests to /partials/:path, which are handled here.
+
+	For example, a request to /partials/root implies that req.params.path is root, which then 
+		attempts to render partials/root.jade. Since the views are configured to be found from /server/views
+		directory, the file /server/views/partials/root.jade would be rendered
+
+	The partials are therefore organized under /server/views/partials directory
+*/
+app.get('/partials/:path', function(req, res) {
+	res.render('partials/' + req.params.path);
+});
+
+/*
+	a catch-all route handler to serve up the index page when a request is made to a path that the server does not handle
+
+	The index page is served to the client where angular handles routing (as this is a single page application)
+*/
+app.get('*', function(req, res) {
+	/*
+		The following did not work
+
+		blogEntry: firstBlog
+
+		Tried passing a model object to index.jade and tried accessing title and content properties as
+			blogEntry.title and blogEntry.content in index.jade, which resulted in an error				
+	*/
+
+	/*
+		pass an object with title and content properties to index.jade
+	*/
+	res.render('index');   <----------------------
+});
+
+var port = 8099;
+
+app.listen(port);
+console.log('Listening on port ' + port + '...');
+```
+
+### Verify the database
+
+As soon as the file is saved, nodemon runs it ending up creating default users. Check the database to see if the users have been created.
+
+	> db.users.find()
+	{ "_id" : ObjectId("56c274a8f029d24e47b34ea0"), "username" : "blackberry", "firstName" : "Rim", "lastName" : "blackberry", "__v" : 0 }
+	{ "_id" : ObjectId("56c274a8f029d24e47b34ea2"), "username" : "iphone", "firstName" : "Swift", "lastName" : "ObjectiveC", "__v" : 0 }
+	{ "_id" : ObjectId("56c274a8f029d24e47b34ea1"), "username" : "android", "firstName" : "Alphabet", "lastName" : "Google", "__v" : 0 }
+
+
+### Installing necessary modules
+
+> BlogSite$ npm install passport passport-local --save
+
+	npm WARN package.json blogsite@1.0.0 No repository field.
+	passport-local@1.0.0 node_modules/passport-local
+	└── passport-strategy@1.0.0
+	
+	passport@0.3.2 node_modules/passport
+	├── passport-strategy@1.0.0
+	└── pause@0.0.1
+
+> BlogSite$ npm install cookie-parser body-parser express-session --save
+
+	npm WARN package.json blogsite@1.0.0 No repository field.
+	cookie-parser@1.4.1 node_modules/cookie-parser
+	├── cookie-signature@1.0.6
+	└── cookie@0.2.3
+	
+	express-session@1.13.0 node_modules/express-session
+	├── cookie-signature@1.0.6
+	├── utils-merge@1.0.0
+	├── parseurl@1.3.1
+	├── on-headers@1.0.1
+	├── cookie@0.2.3
+	├── depd@1.1.0
+	├── crc@3.4.0
+	├── uid-safe@2.0.0 (base64-url@1.2.1)
+	└── debug@2.2.0 (ms@0.7.1)
+	
+	body-parser@1.15.0 node_modules/body-parser
+	├── bytes@2.2.0
+	├── content-type@1.0.1
+	├── depd@1.1.0
+	├── qs@6.1.0
+	├── iconv-lite@0.4.13
+	├── raw-body@2.1.5 (unpipe@1.0.0)
+	├── on-finished@2.3.0 (ee-first@1.1.1)
+	├── http-errors@1.4.0 (statuses@1.2.1, inherits@2.0.1)
+	├── debug@2.2.0 (ms@0.7.1)
+	└── type-is@1.6.11 (media-typer@0.3.0, mime-types@2.1.10)
+
+### In Browser
+
+### Changes to server app
+
