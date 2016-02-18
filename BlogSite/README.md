@@ -1702,7 +1702,7 @@ app.get('*', function(req, res) {
 });
 ```
 
-Now, a request to 'partials/home/root' will match '/partials/*' and is handled by the associated handler without falling to the catch-all handler. The '*' captures everything after '/partials/' and req.params[0] will contain 'home/root', which when added to 'partials/' results in 'partials/home/root' within the render() function, which renders partials/home/root.jade. 
+Now, a request to 'partials/home/root' will match '/partials/\*' and is handled by the associated handler without falling to the catch-all handler. The '\*' captures everything after '/partials/' and req.params[0] will contain 'home/root', which when added to 'partials/' results in 'partials/home/root' within the render() function, which renders partials/home/root.jade. 
 
 
 
