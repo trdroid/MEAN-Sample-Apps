@@ -957,31 +957,6 @@ Switch to "blogsite" database and create an entry in the "blogs" table.
 
 # Implementing Login
 
-### Creating a form
-
-As soon as <i>BlogSite/public/client/app.js</i> (our angular app) loads in the browser, an XHR is made to /partials/root which renders <i>BlogSite/server/views/partials/root.jade</i>. Modify <i>BlogSite/server/views/partials/root.jade</i> to contain a login form to send to the browser.
-
-<i>BlogSite/server/views/partials/root.jade</i>
-
-```jade
-form
-	input(placeholder="username", ng-model="username")
-	input(type="password", placeholder="Password", ng-model="password")
-	button(ng-click="signin(username, password)") Sign In
-```
-
-Also, modify <i>BlogSite/server/views/index.jade</i> to contain
-
-```jade
-extends ../layouts/main_layout
-
-block main-content
-	div(ng-view)
-```
-### In Browser
-
-<img src="_misc/login%20form%20in%20browser.png"/>
-
 ### Creating default users
 
 Remove earlier schema and model for blogs and also the first object being passed to index.jade. 
@@ -1123,6 +1098,98 @@ As soon as the file is saved, nodemon runs it ending up creating default users. 
 	{ "_id" : ObjectId("56c274a8f029d24e47b34ea0"), "username" : "blackberry", "firstName" : "Rim", "lastName" : "blackberry", "__v" : 0 }
 	{ "_id" : ObjectId("56c274a8f029d24e47b34ea2"), "username" : "iphone", "firstName" : "Swift", "lastName" : "ObjectiveC", "__v" : 0 }
 	{ "_id" : ObjectId("56c274a8f029d24e47b34ea1"), "username" : "android", "firstName" : "Alphabet", "lastName" : "Google", "__v" : 0 }
+
+### Creating a form
+
+As soon as <i>BlogSite/public/client/app.js</i> (our angular app) loads in the browser, an XHR is made to /partials/root which renders <i>BlogSite/server/views/partials/root.jade</i>. Modify <i>BlogSite/server/views/partials/root.jade</i> to contain a login form to send to the browser.
+
+<i>BlogSite/server/views/partials/root.jade</i>
+
+Clean up <i>BlogSite/server/views/index.jade</i> to contain
+
+```jade
+extends ../layouts/main_layout
+
+block main-content
+	div(ng-view)
+```
+
+Create a form with a username input and password fields associated with "username" and "password" models in the scope of the controller.
+
+Create a "signin" button associated with an event handler "signin" that passes values of "username" and "password" models in the scope of the controller.
+
+```jade
+form
+	input(placeholder="username", ng-model="username")
+	input(type="password", placeholder="Password", ng-model="password")
+	button(ng-click="signin(username, password)") Sign In
+```
+
+Assign an event handler to the "signin" button in "mainController" controller defined in the angular app <i>BlogSite/public/client/app.js</i>.
+
+Now, the "mainController" has three entities in its scope, username, password and signin.
+
+On clicking the "signin" button, a POST request is made to /signin and the response is verified. 
+
+```javascript
+/*
+	The main entry point to the Angular application
+
+	define module 'app' that depends on ngResource and ngRoute modules
+*/
+
+angular.module('app', ['ngResource', 'ngRoute']);
+
+/*
+	Define the client-side routes by calling the config function and requiring $routeProvider and $locationProvider
+*/
+angular.module('app').config(function($routeProvider, $locationProvider) {
+	/*
+		use $locationProvider to turn on HTML5 mode for routing
+
+		With recent versions of Angular, the head tag requires a base tag base(href="/") for routing to work properly.
+
+		so, server/layouts/main_layout.jade would look like:
+
+		doctype
+		html
+			head
+				base(href="/")  <-----------
+			body
+				block main-content
+				include scripts	
+	*/
+	$locationProvider.html5Mode(true);
+
+	/*
+		Use $routeProvider to define the routes
+	*/
+
+	$routeProvider
+		.when('/', { templateUrl: 'partials/root', controller: 'mainController'});
+		/* 
+			when the routing system determines that the value of location.path() is '/', it will inject the template 'partials/root' 
+			(or more precisely, it makes an XHR request to partials/root and injects its response)
+			into the ngView directive and makes 'mainController' its controller
+		*/
+});
+
+angular.module('app').controller('mainController', function($scope, $http) {
+	$scope.signin = function(username, password) {        <--------------------------------
+   ---------->  $http.post('/signin', {username: username, password: password}).then(function (response) {
+			if(response.data.success) {
+				console.log('Signed in');
+			} else {
+				console.log('Failed to sign in');
+			}
+		});
+	}
+});
+```
+
+### In Browser
+
+<img src="_misc/login%20form%20in%20browser.png"/>
 
 ### Installing necessary modules
 
@@ -1429,3 +1496,9 @@ var port = 8099;
 app.listen(port);
 console.log('Listening on port ' + port + '...');
 ```
+
+### Check
+
+<img src="/_misc/successful%20signin.png"/>
+
+<img src="_misc/failed%20to%20sign%20in.png"/>
