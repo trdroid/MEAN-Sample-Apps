@@ -221,13 +221,12 @@ app.post('/signin', function(req, res, next) {
 	The angular app sends XHR requests to /partials/*, which are handled here.
 
 	For example, a request to /partials/home/root implies that req.params[0] is home/root, which then 
-		attempts to render partials/home/root.jade. Since the views are configured to be found from /server/views
-		directory, the file /server/views/partials/home/root.jade would be rendered
-
-	The partials are therefore organized under /server/views/partials directory
+		attempts to render ../../public/client/home/root.jade. Since the views are configured to be found from /server/views
+		directory, ../../ refers to projects root directory, so the file ../../public/client/home/root.jade refers to
+		BlogSite/public/client/home/root.jade, which is what would be rendered
 */
 app.get('/partials/*', function(req, res) {
-	res.render('../../partials/' + req.params[0]);
+	res.render('../../public/client/' + req.params[0]);
 });
 
 
