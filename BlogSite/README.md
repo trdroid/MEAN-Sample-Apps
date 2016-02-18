@@ -1607,5 +1607,64 @@ script(type="text/javascript", src="/client/app.js")
 script(type="text/javascript", src="/client/home/mvMainController.js")  <---------
 ```
 
+### Organizing partials
+
+Just like the client-side files, organize partials into sub-directories associated with the page they are being used in.
+
+<i>BlogSite/server/views/partials/root.jade</i> is used in the home page, so place it under <i>BlogSite/server/views/partials/home/root.jade</i>
+
+Update the path in <i>BlogSite/public/client/app.js</i> from partials/root to partials/home/root
+
+<i>BlogSite/public/client/app.js</i>
+
+```javascript
+/*
+	The main entry point to the Angular application
+
+	define module 'app' that depends on ngResource and ngRoute modules
+*/
+
+angular.module('app', ['ngResource', 'ngRoute']);
+
+/*
+	Define the client-side routes by calling the config function and requiring $routeProvider and $locationProvider
+*/
+angular.module('app').config(function($routeProvider, $locationProvider) {
+	/*
+		use $locationProvider to turn on HTML5 mode for routing
+
+		With recent versions of Angular, the head tag requires a base tag base(href="/") for routing to work properly.
+
+		so, server/layouts/main_layout.jade would look like:
+
+		doctype
+		html
+			head
+				base(href="/")  <-----------
+			body
+				block main-content
+				include scripts	
+	*/
+	$locationProvider.html5Mode(true);
+
+	/*
+		Use $routeProvider to define the routes
+	*/
+
+	$routeProvider
+		.when('/', { templateUrl: 'partials/home/root', controller: 'mvMainController'});  <--------------------
+		/* 
+			when the routing system determines that the value of location.path() is '/', it will inject the template 'partials/root' 
+			(or more precisely, it makes an XHR request to partials/root and injects its response)
+			into the ngView directive and makes 'mainController' its controller
+		*/
+});
+```
+
+### Test Changes 
+
+<img src="_misc/error%20-%20tried%20to%20load%20angular%20more%20than%20once.png"/>
+
+
 
 
