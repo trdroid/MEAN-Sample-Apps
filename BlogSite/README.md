@@ -1853,12 +1853,41 @@ Create and fill the details in /public/client/common/navbar-controls.jade
 navbar-controls.jade
 
 ```jade
-a.btn.btn-primary About
+div
+	a.btn.btn-primary About
 ```
 
 ### In Browser
 
 <img src="_misc/in%20browser%20with%20navbar%20button.png"/>
+
+### Need for a separate controller
+
+"mvMainController" defined in "mvMainController.js" acts the controller for the content that replaces div(ng-view) in index.jade. The navbar controls and div(ng-view) do not share a common ancestor, because of which the navbar controls need another controller. 
+
+navbar-controls.jade
+
+```jade
+div(ng-controller="mvNavBarController")
+	a.btn.btn-primary About
+```
+
+Add a click handler to the "About" button
+
+```jade
+div(ng-controller="mvNavBarController")
+	a.btn.btn-primary(ng-click="onAboutClick()") About
+```
+
+Create "mvNavBarController"
+
+```jade
+angular.module('app').controller('mvNavBarController', function($scope) {
+	$scope.onAboutClick = function() {
+		console.log('About clicked ...');
+	}
+});
+```
 
 
 
