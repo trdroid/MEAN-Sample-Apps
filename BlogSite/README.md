@@ -1889,5 +1889,7 @@ angular.module('app').controller('mvNavBarController', function($scope) {
 });
 ```
 
+### Project structure
 
+<img src="_misc/mvNavBarController%20in%20project.png"/>
 
