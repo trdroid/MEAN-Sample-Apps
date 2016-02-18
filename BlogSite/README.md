@@ -1499,6 +1499,113 @@ console.log('Listening on port ' + port + '...');
 
 ### Check
 
+> BlogSite$ nodemon server.js
+	[nodemon] 1.8.1
+	[nodemon] to restart at any time, enter `rs`
+	[nodemon] watching: *.*
+	[nodemon] starting `node server.js`
+	body-parser deprecated bodyParser: use individual json/urlencoded middlewares server.js:33:9
+	body-parser deprecated undefined extended: provide extended option node_modules/body-parser/index.js:105:29
+	express-session deprecated undefined resave option; provide resave option server.js:34:9
+	express-session deprecated undefined saveUninitialized option; provide saveUninitialized option server.js:34:9
+	Listening on port 8099...
+	Connected to blogsite database
+
+
 <img src="_misc/successful%20signin.png"/>
 
 <img src="_misc/failed%20to%20sign%20in.png"/>
+
+### Refactoring Code
+
+<b> Client-Side
+
+Separate out the controller "mainController" from <i>BlogSite/public/client/app.js</i> to its own file.
+
+For better organization, have a subfolder for each page under <i>BlogSite/public/client/</i>, which is the directory for the client-side app.
+
+Create a sub-directory "home" to house the files associated with the home page.
+
+Cut out the controller "mainController" and save it the file <i>BlogSite/public/client/home/mvMainController.js</i> (mv stands for multi-view and is a naming convention for files in the client application),as this controller is associated with the home page.
+
+<i>BlogSite/public/client/home/mvMainController.js</i>
+
+Also change the name of the controller to "mvMainController".
+
+```javascript
+angular.module('app').controller('mvMainController', function($scope, $http) {   <------------
+	$scope.signin = function(username, password) {
+		$http.post('/signin', {username: username, password: password}).then(function (response) {
+			if(response.data.success) {
+				console.log('Signed in');
+			} else {
+				console.log('Failed to sign in');
+			}
+		});
+	}
+});
+```
+
+Update the name of the controller in <i>BlogSite/public/client/app.js</i>
+
+<i>BlogSite/public/client/app.js</i>
+
+```javascript
+/*
+	The main entry point to the Angular application
+
+	define module 'app' that depends on ngResource and ngRoute modules
+*/
+
+angular.module('app', ['ngResource', 'ngRoute']);
+
+/*
+	Define the client-side routes by calling the config function and requiring $routeProvider and $locationProvider
+*/
+angular.module('app').config(function($routeProvider, $locationProvider) {
+	/*
+		use $locationProvider to turn on HTML5 mode for routing
+
+		With recent versions of Angular, the head tag requires a base tag base(href="/") for routing to work properly.
+
+		so, server/layouts/main_layout.jade would look like:
+
+		doctype
+		html
+			head
+				base(href="/")  <-----------
+			body
+				block main-content
+				include scripts	
+	*/
+	$locationProvider.html5Mode(true);
+
+	/*
+		Use $routeProvider to define the routes
+	*/
+
+	$routeProvider
+		.when('/', { templateUrl: 'partials/root', controller: 'mvMainController'});  <---------------------
+		/* 
+			when the routing system determines that the value of location.path() is '/', it will inject the template 'partials/root' 
+			(or more precisely, it makes an XHR request to partials/root and injects its response)
+			into the ngView directive and makes 'mainController' its controller
+		*/
+});
+```
+
+Update to include the controller script to be delivered to the client in <i>BlogSite/server/layouts/scripts.jade</i>
+
+<i>BlogSite/server/layouts/scripts.jade</i>
+
+```jade
+script(type="text/javascript", src="/vendor/jquery/dist/jquery.js")
+script(type="text/javascript", src="/vendor/angular/angular.js")
+script(type="text/javascript", src="/vendor/angular-resource/angular-resource.js")
+script(type="text/javascript", src="/vendor/angular-route/angular-route.js")
+script(type="text/javascript", src="/client/app.js")
+script(type="text/javascript", src="/client/home/mvMainController.js")  <---------
+```
+
+
+
