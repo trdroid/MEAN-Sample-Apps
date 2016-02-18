@@ -218,16 +218,16 @@ app.post('/signin', function(req, res, next) {
 });
 
 /*
-	The angular app sends XHR requests to /partials/:path, which are handled here.
+	The angular app sends XHR requests to /partials/*, which are handled here.
 
-	For example, a request to /partials/root implies that req.params.path is root, which then 
-		attempts to render partials/root.jade. Since the views are configured to be found from /server/views
-		directory, the file /server/views/partials/root.jade would be rendered
+	For example, a request to /partials/home/root implies that req.params[0] is home/root, which then 
+		attempts to render partials/home/root.jade. Since the views are configured to be found from /server/views
+		directory, the file /server/views/partials/home/root.jade would be rendered
 
 	The partials are therefore organized under /server/views/partials directory
 */
 app.get('/partials/*', function(req, res) {
-	res.render('partials/' + req.params[0]);
+	res.render('../../partials/' + req.params[0]);
 });
 
 
