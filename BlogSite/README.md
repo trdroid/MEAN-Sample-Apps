@@ -1516,9 +1516,7 @@ console.log('Listening on port ' + port + '...');
 
 <img src="_misc/failed%20to%20sign%20in.png"/>
 
-### Refactoring Code
-
-<b> Client-Side </b>
+### Organizing client-side code
 
 Separate out the controller "mainController" from <i>BlogSite/public/client/app.js</i> to its own file.
 
@@ -1693,6 +1691,13 @@ The solution is to add '*' after /partials to match all requests for files under
 A snippet from <i>BlogSite/server.js</i>
 
 ```javascript
+/*
+	The angular app sends XHR requests to /partials/*, which are handled here.
+
+	For example, a request to /partials/home/root implies that req.params[0] is home/root, which then 
+		attempts to render partials/home/root.jade. Since the views are configured to be found from /server/views
+		directory, the file /server/views/partials/home/root.jade would be rendered
+*/
 app.get('/partials/*', function(req, res) {         <--------------------
 	res.render('partials/' + req.params[0]);    <--------------------
 });
@@ -1705,5 +1710,42 @@ app.get('*', function(req, res) {
 Now, a request to 'partials/home/root' will match '/partials/\*' and is handled by the associated handler without falling to the catch-all handler. The '\*' captures everything after '/partials/' and req.params[0] will contain 'home/root', which when added to 'partials/' results in 'partials/home/root' within the render() function, which renders partials/home/root.jade. 
 
 
+### Snapshot of new project structure
 
+<img src="_misc/client%20home%20partials%20home%20project%20structure.png"/>
 
+### Grouping client-side and partials structures 
+
+It could be noticed from above that the client-side organization and the partials organization structures match, so they could be grouped under one structure.
+
+Place the partials with the client-code they are associated with. 
+
+Place "root.jade" with "mvMainController.js", as they both are associated with the same page, the home page.
+
+Delete the "views/partials", as it is no longer needed, since we have decided to place the partials with their associated client-side code.
+
+### Making appropriate changes to server app
+
+The new path of partials have to be accommodated in the server app.
+
+```javascript
+/*
+	The angular app sends XHR requests to /partials/*, which are handled here.
+
+	For example, a request to /partials/home/root implies that req.params[0] is home/root, which then 
+		attempts to render ../../public/client/home/root.jade. Since the views are configured to be found from /server/views
+		directory, ../../ refers to projects root directory, so the file ../../public/client/home/root.jade refers to
+		BlogSite/public/client/home/root.jade, which is what would be rendered
+*/
+app.get('/partials/*', function(req, res) {
+	res.render('../../public/client/' + req.params[0]);
+});
+
+app.get('*', function(req, res) {
+	res.render('index');
+});
+```
+
+### Snapshot of new project structure
+
+<img src="_misc/after%20keeping%20partials%20with%20client-side%20code.png"/>
