@@ -1750,7 +1750,9 @@ app.get('*', function(req, res) {
 
 <img src="_misc/after%20keeping%20partials%20with%20client-side%20code.png"/>
 
-### Installing bootstrap
+### Adding to the user-interface
+
+<b>Installing bootstrap</b>
 
 > BlogSite$ bower install bootstrap --save
 
@@ -1791,7 +1793,7 @@ Notice the dependency added to bower.json
 }
 ```
 
-Add bootstrap.css to "main_layout.jade" file
+Add bootstrap.css to "main_layout.jade" file, so any .jade file that "extends" the main_layout file would include bootstrap.css
 
 ```jade
 doctype
@@ -1804,4 +1806,59 @@ html
 		block main-content
 		include scripts
 ```
+
+Add the following to index.jade
+
+```jade
+extends ../layouts/main_layout
+
+--------------
+block main-content            
+	.navbar.navbar-default
+		.navbar-header
+			a.navbar-brand(href='/') BlogSite			
+--------------
+
+	div(ng-view)
+```
+
+### In Browser
+
+<img src="_misc/in%20browser%20with%20navbar.png"/>
+
+<b>Adding navbar controls</b>
+
+Define a partial with navbar controls and send a request to a partial that returns navbar controls.
+
+This allows us to use Jade (better HTML) for writing client-side interface bits. 
+
+Add the following to index.jade
+
+```jade
+extends ../layouts/main_layout
+
+block main-content
+	.navbar.navbar-default
+		.navbar-header
+			a.navbar-brand(href='/') BlogSite
+			div(ng-include="'/partials/common/navbar-controls'")  ------
+
+	div(ng-view)
+```
+
+The newly added line, sends a request to /partials/common/navbar-controls to the server app, which attempts to render the file /public/client/common/navbar-controls.jade.
+
+Create and fill the details in /public/client/common/navbar-controls.jade
+
+navbar-controls.jade
+
+```jade
+a.btn.btn-primary About
+```
+
+### In Browser
+
+<img src="_misc/in%20browser%20with%20navbar%20button.png"/>
+
+
 
