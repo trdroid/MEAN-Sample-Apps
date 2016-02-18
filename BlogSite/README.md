@@ -1667,7 +1667,7 @@ The app crashes!!!
 
 <img src="_misc/error%20-%20tried%20to%20load%20angular%20more%20than%20once.png"/>
 
-It is because the route to partials in the server app only handles requests for files immediately under <i>BlogSite/server/views/partials/</i>, but since the root.jade has to moved to a sub-directory under the  <i>BlogSite/server/views/partials/</i> directory to <i>BlogSite/server/views/partials/home</i>, a request to root.jade is handled by the catch-all route.
+It is because the route to partials in the server app only handles requests for files immediately under <i>BlogSite/server/views/partials/</i>, but since the root.jade has been moved moved to a sub-directory under the  <i>BlogSite/server/views/partials/</i> directory, i.e. to <i>BlogSite/server/views/partials/home</i>, a request to root.jade is handled by the catch-all route.
 
 A snippet from <i>BlogSite/server.js</i>
 
@@ -1688,7 +1688,21 @@ app.get('*', function(req, res) {
 
 The catch-all route serves index.jade, which in turn requests for 'partials/home/root', which again does not match the route to partials and is handled by the catch-all route ... leading to an infinite request loop, which can be figured from the screenshot.
 
+The solution is to add '*' after /partials to match all requests for files under /partials, and append req.params[0] to partials/ path.
 
+A snippet from <i>BlogSite/server.js</i>
+
+```javascript
+app.get('/partials/*', function(req, res) {         <--------------------
+	res.render('partials/' + req.params[0]);    <--------------------
+});
+
+app.get('*', function(req, res) {
+	res.render('index');
+});
+```
+
+Now, a request to 'partials/home/root' will match '/partials/*' and is handled by the associated handler without falling to the catch-all handler. The '*' captures everything after '/partials/' and req.params[0] will contain 'home/root', which when added to 'partials/' results in 'partials/home/root' within the render() function, which renders partials/home/root.jade. 
 
 
 
