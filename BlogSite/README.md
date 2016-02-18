@@ -1499,6 +1499,6 @@ console.log('Listening on port ' + port + '...');
 
 ### Check
 
-<img src="/_misc/successful%20signin.png"/>
+<img src="_misc/successful%20signin.png"/>
 
 <img src="_misc/failed%20to%20sign%20in.png"/>
