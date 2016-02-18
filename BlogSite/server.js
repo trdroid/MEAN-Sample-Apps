@@ -226,8 +226,8 @@ app.post('/signin', function(req, res, next) {
 
 	The partials are therefore organized under /server/views/partials directory
 */
-app.get('/partials/:path', function(req, res) {
-	res.render('partials/' + req.params.path);
+app.get('/partials/*', function(req, res) {
+	res.render('partials/' + req.params[0]);
 });
 
 
