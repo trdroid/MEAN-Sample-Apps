@@ -40,7 +40,14 @@ angular.module('app').config(function($routeProvider, $locationProvider) {
 		*/
 });
 
-angular.module('app').controller('mainController', function($scope) {
-	$scope.title = "My First Blog";
-	$scope.content = "Welcome to my first blog";
+angular.module('app').controller('mainController', function($scope, $http) {
+	$scope.signin = function(username, password) {
+		$http.post('/signin', {username: username, password: password}).then(function (response) {
+			if(response.data.success) {
+				console.log('Signed in');
+			} else {
+				console.log('Failed to sign in');
+			}
+		});
+	}
 });
