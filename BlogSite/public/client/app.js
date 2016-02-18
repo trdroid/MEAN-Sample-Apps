@@ -32,22 +32,10 @@ angular.module('app').config(function($routeProvider, $locationProvider) {
 	*/
 
 	$routeProvider
-		.when('/', { templateUrl: 'partials/root', controller: 'mainController'});
+		.when('/', { templateUrl: 'partials/home/root', controller: 'mvMainController'});
 		/* 
 			when the routing system determines that the value of location.path() is '/', it will inject the template 'partials/root' 
 			(or more precisely, it makes an XHR request to partials/root and injects its response)
 			into the ngView directive and makes 'mainController' its controller
 		*/
-});
-
-angular.module('app').controller('mainController', function($scope, $http) {
-	$scope.signin = function(username, password) {
-		$http.post('/signin', {username: username, password: password}).then(function (response) {
-			if(response.data.success) {
-				console.log('Signed in');
-			} else {
-				console.log('Failed to sign in');
-			}
-		});
-	}
 });
