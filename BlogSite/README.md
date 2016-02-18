@@ -1518,7 +1518,7 @@ console.log('Listening on port ' + port + '...');
 
 ### Refactoring Code
 
-<b> Client-Side
+<b> Client-Side </b>
 
 Separate out the controller "mainController" from <i>BlogSite/public/client/app.js</i> to its own file.
 
