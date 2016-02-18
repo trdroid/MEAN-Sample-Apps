@@ -1663,7 +1663,32 @@ angular.module('app').config(function($routeProvider, $locationProvider) {
 
 ### Test Changes 
 
+The app crashes!!!
+
 <img src="_misc/error%20-%20tried%20to%20load%20angular%20more%20than%20once.png"/>
+
+It is because the route to partials in the server app only handles requests for files immediately under <i>BlogSite/server/views/partials/</i>, but since the root.jade has to moved to a sub-directory under the  <i>BlogSite/server/views/partials/</i> directory to <i>BlogSite/server/views/partials/home</i>, a request to root.jade is handled by the catch-all route.
+
+A snippet from <i>BlogSite/server.js</i>
+
+```javascript
+/*
+ cannot handle the request to partials/home/root, which then is handled by the catch-all route handler,
+  as the route partials/home/root does not match the route /partials/:path 
+*/ 
+app.get('/partials/:path', function(req, res) {
+	res.render('partials/' + req.params.path);
+});
+
+app.get('*', function(req, res) {
+	res.render('index');
+});
+
+```
+
+The catch-all route serves index.jade, which in turn requests for 'partials/home/root', which again does not match the route to partials and is handled by the catch-all route ... leading to an infinite request loop, which can be figured from the screenshot.
+
+
 
 
 
