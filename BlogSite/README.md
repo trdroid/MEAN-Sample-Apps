@@ -1500,6 +1500,7 @@ console.log('Listening on port ' + port + '...');
 ### Check
 
 > BlogSite$ nodemon server.js
+
 	[nodemon] 1.8.1
 	[nodemon] to restart at any time, enter `rs`
 	[nodemon] watching: *.*
