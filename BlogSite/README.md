@@ -1893,3 +1893,5 @@ angular.module('app').controller('mvNavBarController', function($scope) {
 
 <img src="_misc/mvNavBarController%20in%20project.png"/>
 
+### Refactoring server code
+
