@@ -1830,7 +1830,7 @@ block main-content
 
 Define a partial with navbar controls and send a request to a partial that returns navbar controls.
 
-This allows us to use Jade (better HTML) for writing client-side interface bits. 
+This allows us to use Jade (better HTML) for writing client-side interface bits. They have to be placed on the server side for the jade engine to render them. 
 
 Add the following to index.jade
 
