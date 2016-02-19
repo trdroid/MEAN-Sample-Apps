@@ -2270,6 +2270,7 @@ angular.module('app').factory('mvToastrNotifier', function(mvToastr) {
 });
 ```
 
+<img src="_misc/mvToastrNotifier%20in%20project.png"/>
 
 Include toastr.js and the newly created file in scripts.jade
 
@@ -2294,7 +2295,7 @@ html
 		base(href="/")
 		title BlogSite
 		link(rel="stylesheet", href="/vendor/bootstrap/dist/css/bootstrap.css")
-		link(rel="stylesheet", href="/vendor/toastr/toastr.css")  <-------------------
+		link(rel="stylesheet", href="/vendor/toastr/toastr.css")  -------------------
 	body(ng-app='app')
 		block main-content
 		include scripts
