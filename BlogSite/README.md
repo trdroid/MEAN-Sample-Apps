@@ -1917,4 +1917,25 @@ Also, notice that the /signin route refactored to routes.js contains logic for i
 
 <img src="_misc/after%20refactoring%20authentication%20code.png"/>
 
+<i>server.js</i>
 
+```javascript
+var express = require('express');
+
+var env = process.env.NODE_ENV = process.env.NODE_ENV || 'DEV';
+
+var app = express();
+
+var config = require('./server/config/config')[env];
+
+require('./server/config/init')(app, config);
+
+require('./server/config/mongoose')(config);
+
+require('./server/config/passport')();
+
+require('./server/config/routes')(app);
+
+app.listen(config.port);
+console.log('Listening on port ' + config.port + '...');
+```
