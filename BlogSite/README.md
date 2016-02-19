@@ -2319,6 +2319,12 @@ angular.module('app').controller('mvMainController', function($scope, $http, mvT
 });
 ```
 
+<i> In browser </i>
+
+<img src="_misc/success%20message.png"/>
+
+<img src="_misc/failure%20message.png"/>
+
 <b> keep track of the user who logged in </b>
 
 Once the server authenticates the user, it sends back a success message along with the user object. Use that on the client side to determine if the user has logged in and if so, who the user is. 
