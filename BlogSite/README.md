@@ -1896,3 +1896,5 @@ angular.module('app').controller('mvNavBarController', function($scope) {
 
 ### Refactoring server code
 
+<img src="_misc/server%20side%20code%20refactoring.png"/>
+
