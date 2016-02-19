@@ -2239,8 +2239,8 @@ console.log('Listening on port ' + config.port + '...');
 
 After a user logs in,
 * notify the user that they have logged in successfully
-* hide the login form, so that the user has to first logout before logging back in
 * keep track of the user that logged in
+* hide the login form, so that the user has to first logout before logging back in
 
 <b>Notifying the user</b>
 
@@ -2313,6 +2313,99 @@ angular.module('app').controller('mvMainController', function($scope, $http, mvT
 			} else {
 				//console.log('Failed to sign in');
 				mvToastrNotifier.notify('Username/password is incorrect', false);  <----
+			}
+		});
+	}
+});
+```
+
+<b> keep track of the user who logged in </b>
+
+Once the server authenticates the user, it sends back a success message along with the user object. Use that on the client side to determine if the user has logged in and if so, who the user is. 
+
+Create a service "mvUserIdentity" in a new file to hold the user that has logged in
+
+<i>common/mvUserIdentity.js</i>
+
+```javascript
+/*
+	to store the user logged in
+	also to verify if the has logged in
+*/
+angular.module('app').factory('mvUserIdentity', function() {
+	return {
+		user: undefined,
+		isUserAuthenticated: function() {
+			return !!this.user;
+		}
+	}
+});
+```
+
+<img src="_misc/mvUserIdentity%20in%20project%20structure.png"/>
+
+In mvMainController, include mvUserIdentity as a dependency. Once a user is authenticated, receive the user object from the server and stash it in the "user" field of mvUserIdentity. 
+
+<i>home/mvMainController.js</i>
+
+```javascript
+angular.module('app').controller('mvMainController', function($scope, $http, mvToastrNotifier, mvUserIdentity) {  <-----
+	$scope.signin = function(username, password) {
+		$http.post('/signin', {username: username, password: password}).then(function (response) {
+			if(response.data.success) {				
+				mvUserIdentity.user = response.data.user;     <--------------------------------
+				mvToastrNotifier.notify('Successfully signed in', true);
+			} else {
+				//console.log('Failed to sign in');
+				mvToastrNotifier.notify('Username/password is incorrect', false);
+			}
+		});
+	}
+});
+```
+
+Include the new script in scripts.jade
+
+```jade
+script(type="text/javascript", src="/vendor/jquery/dist/jquery.js")
+script(type="text/javascript", src="/vendor/angular/angular.js")
+script(type="text/javascript", src="/vendor/angular-resource/angular-resource.js")
+script(type="text/javascript", src="/vendor/angular-route/angular-route.js")
+script(type="text/javascript", src="/vendor/toastr/toastr.js")
+script(type="text/javascript", src="/client/app.js")
+script(type="text/javascript", src="/client/home/mvMainController.js")
+script(type="text/javascript", src="/client/common/mvNavBarController.js")
+script(type="text/javascript", src="/client/common/mvToastrNotifier.js")
+script(type="text/javascript", src="/client/common/mvUserIdentity.js")   <--------
+```
+
+<b> hide the login form, so that the user has to first logout before logging back in </b>
+
+Add an ng-hide attribute to the form element in root.jade
+
+```jade
+form(ng-hide="userIdentity.isUserAuthenticated()")   ------------------------
+	input(placeholder="username", ng-model="username")
+	input(type="password", placeholder="Password", ng-model="password")
+	button(ng-click="signin(username, password)") Sign In
+```
+
+If "userIdentity" in the scope of "mvMainController" returns true for userIdentity.isUserAuthenticated(), then the form field would be hidden.
+
+Define "userIdentity" in the scope of "mvMainController" to contain "mvUserIdentity", this way when a user is stashed in mvUserIdentity.user, then mvUserIdentity.isUserAuthenticated() => $scope.userIdentity.isUserAuthenticated() evaluates to true and hides the form. 
+
+```javascript
+angular.module('app').controller('mvMainController', function($scope, $http, mvToastrNotifier, mvUserIdentity) {
+	$scope.userIdentity = mvUserIdentity;  <-------------
+
+	$scope.signin = function(username, password) {
+		$http.post('/signin', {username: username, password: password}).then(function (response) {
+			if(response.data.success) {				
+				mvUserIdentity.user = response.data.user;
+				mvToastrNotifier.notify('Successfully signed in', true);
+			} else {
+				//console.log('Failed to sign in');
+				mvToastrNotifier.notify('Username/password is incorrect', false);
 			}
 		});
 	}
