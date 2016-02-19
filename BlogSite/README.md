@@ -2319,7 +2319,7 @@ angular.module('app').controller('mvMainController', function($scope, $http, mvT
 });
 ```
 
-<b> keep track of the user that logged in </b>
+<b> keep track of the user who logged in </b>
 
 Once the server authenticates the user, it sends back a success message along with the user object. Use that on the client side to determine if the user has logged in and if so, who the user is. 
 
@@ -2379,3 +2379,35 @@ script(type="text/javascript", src="/client/common/mvToastrNotifier.js")
 script(type="text/javascript", src="/client/common/mvUserIdentity.js")   <--------
 ```
 
+<b> hide the login form, so that the user has to first logout before logging back in </b>
+
+Add an ng-hide attribute to the form element in root.jade
+
+```jade
+form(ng-hide="userIdentity.isUserAuthenticated()")   ------------------------
+	input(placeholder="username", ng-model="username")
+	input(type="password", placeholder="Password", ng-model="password")
+	button(ng-click="signin(username, password)") Sign In
+```
+
+If "userIdentity" in the scope of "mvMainController" returns true for userIdentity.isUserAuthenticated(), then the form field would be hidden.
+
+Define "userIdentity" in the scope of "mvMainController" to contain "mvUserIdentity", this way when a user is stashed in mvUserIdentity.user, then mvUserIdentity.isUserAuthenticated() => $scope.userIdentity.isUserAuthenticated() evaluates to true and hides the form. 
+
+```javascript
+angular.module('app').controller('mvMainController', function($scope, $http, mvToastrNotifier, mvUserIdentity) {
+	$scope.userIdentity = mvUserIdentity;  <-------------
+
+	$scope.signin = function(username, password) {
+		$http.post('/signin', {username: username, password: password}).then(function (response) {
+			if(response.data.success) {				
+				mvUserIdentity.user = response.data.user;
+				mvToastrNotifier.notify('Successfully signed in', true);
+			} else {
+				//console.log('Failed to sign in');
+				mvToastrNotifier.notify('Username/password is incorrect', false);
+			}
+		});
+	}
+});
+```
