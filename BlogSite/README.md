@@ -2241,4 +2241,79 @@ After a user logs in,
 * notify the user that they have logged in successfully
 * hide the login form, so that the user has to first logout before logging back in
 * keep track of the user that logged in
- 
+
+<b>Notifying the user</b>
+
+Create a service in a new file <i>common/mvToastrNotifier.js</i>
+
+```javascript
+/*
+	wrap toastr in a service which puts the toastr global variable into a service so that it can be used in dependency injection
+*/
+angular.module('app').value('mvToastr', toastr);
+
+/*
+	create a notifier service based on toastr wrapped in the service
+*/
+angular.module('app').factory('mvToastrNotifier', function(mvToastr) {
+	return {
+		notify: function(msg, isSuccess) {
+			if(isSuccess) {
+				mvToastr.success(msg);				
+			} else {
+				mvToastr.error(msg);
+			}			
+
+			console.log(msg);
+		}
+	}
+});
+```
+
+
+Include toastr.js and the newly created file in scripts.jade
+
+```jade
+script(type="text/javascript", src="/vendor/jquery/dist/jquery.js")
+script(type="text/javascript", src="/vendor/angular/angular.js")
+script(type="text/javascript", src="/vendor/angular-resource/angular-resource.js")
+script(type="text/javascript", src="/vendor/angular-route/angular-route.js")
+script(type="text/javascript", src="/vendor/toastr/toastr.js") <---------------
+script(type="text/javascript", src="/client/app.js")
+script(type="text/javascript", src="/client/home/mvMainController.js")
+script(type="text/javascript", src="/client/common/mvNavBarController.js")
+script(type="text/javascript", src="/client/common/mvToastrNotifier.js") <---------------
+```
+
+Include toastr.css in main_layout.jade
+
+```jade
+doctype
+html
+	head
+		base(href="/")
+		title BlogSite
+		link(rel="stylesheet", href="/vendor/bootstrap/dist/css/bootstrap.css")
+		link(rel="stylesheet", href="/vendor/toastr/toastr.css")  <-------------------
+	body(ng-app='app')
+		block main-content
+		include scripts
+```
+
+Modify mvMainController to use mvToastrNotifier. First include it as a dependency and call its method to notify the user.
+
+```javascript
+angular.module('app').controller('mvMainController', function($scope, $http, mvToastrNotifier) {   <--------
+	$scope.signin = function(username, password) {
+		$http.post('/signin', {username: username, password: password}).then(function (response) {
+			if(response.data.success) {
+				//console.log('Signed in');
+				mvToastrNotifier.notify('Successfully signed in', true);  <----
+			} else {
+				//console.log('Failed to sign in');
+				mvToastrNotifier.notify('Username/password is incorrect', false);  <----
+			}
+		});
+	}
+});
+```
