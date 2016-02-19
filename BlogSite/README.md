@@ -1898,3 +1898,23 @@ angular.module('app').controller('mvNavBarController', function($scope) {
 
 <img src="_misc/server%20side%20code%20refactoring.png"/>
 
+<i>config.js</i> contains configuration parameters.
+
+```javascript
+var path = require('path');
+var rootPath = path.normalize(__dirname + "/../../");
+
+module.exports = {
+	DEV: {
+		rootPath: rootPath,
+		connectionString: 'mongodb://localhost/blogsite',
+		port: process.env.PORT || 8099
+	}
+}
+```
+
+Also, notice that the /signin route refactored to routes.js contains logic for implementing the signin functionality. It is not appropriate to place logic in a routes file, so that code can be refactored to its own file.
+
+<img src="_misc/after%20refactoring%20authentication%20code.png"/>
+
+
