@@ -2234,3 +2234,11 @@ require('./server/config/routes')(app);
 app.listen(config.port);
 console.log('Listening on port ' + config.port + '...');
 ```
+
+### Client-side changes after logging in
+
+After a user logs in,
+* notify the user that they have logged in successfully
+* hide the login form, so that the user has to first logout before logging back in
+* keep track of the user that logged in
+ 
