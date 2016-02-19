@@ -1913,7 +1913,7 @@ module.exports = {
 }
 ```
 
-Also, notice that the /signin route refactored to routes.js contains logic for implementing the signin functionality. It is not appropriate to place logic in a routes file, so that code can be refactored to its own file.
+Also, notice that the /signin route refactored to routes.js contains logic for implementing the signin functionality. It is not appropriate to place logic in a routes file, so that code can be refactored to its own file (authenticate.js).
 
 <img src="_misc/after%20refactoring%20authentication%20code.png"/>
 
