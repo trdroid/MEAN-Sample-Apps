@@ -2592,12 +2592,12 @@ module.exports = function(config) {
 			User.create({username: 'blackberry', firstName: 'Rim', lastName: 'blackberry', salt: salt, hashedPassword: hashedPassword});		<--------
 
 			var salt = generateSalt();						<--------
-			var password = generateHashedPassword('password2', salt);		<--------
+			var hashedPassword = generateHashedPassword('password2', salt);		<--------
 
 			User.create({username: 'android', firstName: 'Alphabet', lastName: 'Google', salt: salt, hashedPassword: hashedPassword});
 
 			var salt = generateSalt();						<--------
-			var password = generateHashedPassword('password3', salt);		<--------
+			var hashedPassword = generateHashedPassword('password3', salt);		<--------
 
 			User.create({username: 'iphone', firstName: 'Swift', lastName: 'ObjectiveC', salt: salt, hashedPassword: hashedPassword});		<--------
 		}
