@@ -2489,3 +2489,150 @@ script(type="text/javascript", src="/client/common/mvToastrNotifier.js")
 script(type="text/javascript", src="/client/common/mvUserIdentity.js")
 script(type="text/javascript", src="/client/common/mvAuthenticate.js")  <----------
 ```
+
+### Verifying password
+
+Remove existing users and add fields asscoiated with a secure password to the schema. 
+
+Remove Existing Users
+
+	> use blogsite
+	switched to db blogsite
+	> db.users.find()
+	{ "_id" : ObjectId("56c274a8f029d24e47b34ea0"), "username" : "blackberry", "firstName" : "Rim", "lastName" : "blackberry", "__v" : 0 }
+	{ "_id" : ObjectId("56c274a8f029d24e47b34ea2"), "username" : "iphone", "firstName" : "Swift", "lastName" : "ObjectiveC", "__v" : 0 }
+	{ "_id" : ObjectId("56c274a8f029d24e47b34ea1"), "username" : "android", "firstName" : "Alphabet", "lastName" : "Google", "__v" : 0 }
+	> db.users.remove()
+	2016-02-20T11:02:51.994-0500 E QUERY    [thread1] Error: remove needs a query :
+	DBCollection.prototype._parseRemove@src/mongo/shell/collection.js:333:1
+	DBCollection.prototype.remove@src/mongo/shell/collection.js:356:18
+	@(shell):1:1
+	
+	> db.users.remove({})
+	WriteResult({ "nRemoved" : 3 })
+	> db.users.find()
+	> 
+
+
+
+Update <i>server/config/mongoose.js</i>
+
+* Add two private functions to generate salt and a hashed password from the salt and the password. 
+* Add the salt and the hashedPassword fields to the schema "userSchema".
+
+```javascript
+var mongoose = require('mongoose'),
+	crypto = require('crypto');
+
+module.exports = function(config) {
+	/*
+		connect to blogsite database on the local mongoDB server
+	*/
+	mongoose.connect(config.connectionString);
+
+	var db = mongoose.connection;
+
+	db.on('error', console.error.bind(console, 'Failed to connect. Error occurred ...'));
+
+	db.once('open', function() {
+		console.log('Connected to blogsite database');
+	});
+
+	/*
+		Create a schema for users
+
+		Column names and Column types
+	*/
+	var userSchema = mongoose.Schema({   
+			username: String,
+			firstName: String, 
+			lastName: String,
+			salt: String,               <----------
+			hashedPassword: String	    <----------	
+		});
+
+
+	/*
+		Create a User model out of userSchema
+
+		Pass in the collection name and the schema
+
+		Mongoose processes the collection name i.e. 
+			it makes the first letter small and 
+			pluralizes the collection name
+		to represent the collection in the database
+		
+		so, the collection name "User" represents "users" in the "blogsite" database
+	*/
+	var User = mongoose.model('User', userSchema);
+
+	var firstBlog;
+
+	/*
+		Get all the documents from "users" collection by using the find() method on the "User" model
+
+		If there is no user collection, create default users
+	*/
+	User.find({}).exec(function(err, userCollection) {
+		if(userCollection.length == 0) {
+			/*
+				MAKE SURE THAT THE ATTRIBUTE NAMES OF DOCUMENT PASSED TO create() MATCHES WITH ATTRIBUTE NAMES
+				PASSED TO mongoose.Schema
+
+				Any typos would mean missing data.
+
+				For example, if the schema is defined with username as one of its attributes,
+					then passing userName (notice N is caps here) to create() method results in the actual 
+					userName attribute unfilled for that document
+			*/
+
+			var salt = generateSalt();
+			var hashedPassword = generateHashedPassword(salt, 'password1');
+
+			User.create({username: 'blackberry', firstName: 'Rim', lastName: 'blackberry', salt: salt, hashedPassword: hashedPassword});
+
+			var salt = generateSalt();
+			var password = generateHashedPassword(salt, 'password2');
+
+			User.create({username: 'android', firstName: 'Alphabet', lastName: 'Google', salt: salt, hashedPassword: hashedPassword});
+
+			var salt = generateSalt();
+			var password = generateHashedPassword(salt, 'password3');
+
+			User.create({username: 'iphone', firstName: 'Swift', lastName: 'ObjectiveC', salt: salt, hashedPassword: hashedPassword});
+		}
+	});	
+}
+
+<--------------------------
+function generateSalt() {   
+	return crypto.randomBytes(128).toString('base64');
+}
+
+function generateHashedPassword(salt, password) { 
+	/*
+		pass in the name of the algorithm as the first parameter
+	*/
+	var hmac = crypto.createHmac('sha1', salt);
+
+	/*
+		set the encoding to HEX
+	*/
+	hmac.setEncoding('hex');
+
+	hmac.write(password);
+
+	hmac.end();
+
+	return hmac.read();
+}
+<--------------------------
+```
+
+With nodemon running, saving the changes creates the users in the database.
+
+	> db.users.find()
+	{ "_id" : ObjectId("56c89917f5a5b7f9620e4c2f"), "username" : "blackberry", "firstName" : "Rim", "lastName" : "blackberry", "salt" : "oUyA4TgsQWBsaAL3cXdcj9u/JU5CJ/1kk7V3gaM3/P4y/GIz72WI7rcvoFluiaWBs1kRVrlA0mUOGYZcV/0nmWwYUgfmEy+x7eX4sGPAx9wEJwrZkts3EOwOYHu3G915SvFIi8IOT3MQGNsDeSU2EF3iUEStrGw0Fxvqfnn1G/w=", "hashedPassword" : "9d9f1fd8a28d42c54b5d04cb2382ba3fb249004e", "__v" : 0 }
+	{ "_id" : ObjectId("56c89917f5a5b7f9620e4c31"), "username" : "iphone", "firstName" : "Swift", "lastName" : "ObjectiveC", "salt" : "PPVixsJ2cduWKAWOqls7WhFwvUnr6ageVR7IsiIzA5K8Trhbg9ipXadvMRsiC1emuaeyrEu029uvCFcYJTMhedcuBok/Joz43iodhT3NiHB/3duJI11KlKHPMzhXYzHMk1ZNQDL3raTxOoDxfYVrDzXkolQdGqeDWgvfoDoSQo4=", "hashedPassword" : "9d9f1fd8a28d42c54b5d04cb2382ba3fb249004e", "__v" : 0 }
+	{ "_id" : ObjectId("56c89917f5a5b7f9620e4c30"), "username" : "android", "firstName" : "Alphabet", "lastName" : "Google", "salt" : "szEvyf+9Pt+5S1XxRpbIB+qbUqUM0VgcP4kGqiUw/w1H4NqBoEPNbNi5lQ0nYSsR2mR2MvKSpqzhMXj5PlqHnKvx2hIFWfdDJHme2W2D9Bb5qIObQNuBRyg19x2c86oa9lJDoekgd/CkmiOb7eXwbOpwrI8vc8wfaUVYL9L6Xp8=", "hashedPassword" : "9d9f1fd8a28d42c54b5d04cb2382ba3fb249004e", "__v" : 0 }
+
