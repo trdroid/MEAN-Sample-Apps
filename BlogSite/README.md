@@ -2453,7 +2453,7 @@ angular.module('app').factory('mvAuthenticate', function($http, mvUserIdentity, 
 });
 ```
 
-<img src="mvAuthenticate%20in%20project%20structure.png"/>
+<img src="_misc/mvAuthenticate%20in%20project%20structure.png"/>
 
 
 Declare the newly created service "mvAuthenticate" as a dependency in "mvMainController" and refactor the code to delegate the call to login to the service
