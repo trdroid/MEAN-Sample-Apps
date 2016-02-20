@@ -1,13 +1,11 @@
-angular.module('app').controller('mvMainController', function($scope, $http, mvToastrNotifier, mvUserIdentity) {
+angular.module('app').controller('mvMainController', function($scope, $http, mvToastrNotifier, mvUserIdentity, mvAuthenticate) {
 	$scope.userIdentity = mvUserIdentity;
 
 	$scope.signin = function(username, password) {
-		$http.post('/signin', {username: username, password: password}).then(function (response) {
-			if(response.data.success) {				
-				mvUserIdentity.user = response.data.user;
+		mvAuthenticate.authenticateUser(username, password).then(function(success) {
+			if(success) {
 				mvToastrNotifier.notify('Successfully signed in', true);
 			} else {
-				//console.log('Failed to sign in');
 				mvToastrNotifier.notify('Username/password is incorrect', false);
 			}
 		});
