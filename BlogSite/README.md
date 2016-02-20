@@ -2489,3 +2489,346 @@ script(type="text/javascript", src="/client/common/mvToastrNotifier.js")
 script(type="text/javascript", src="/client/common/mvUserIdentity.js")
 script(type="text/javascript", src="/client/common/mvAuthenticate.js")  <----------
 ```
+
+### Verifying password
+
+Remove existing users and add fields asscoiated with a secure password to the schema. 
+
+<i>Remove Existing Users</i>
+
+	> use blogsite
+	switched to db blogsite
+	> db.users.find()
+	{ "_id" : ObjectId("56c274a8f029d24e47b34ea0"), "username" : "blackberry", "firstName" : "Rim", "lastName" : "blackberry", "__v" : 0 }
+	{ "_id" : ObjectId("56c274a8f029d24e47b34ea2"), "username" : "iphone", "firstName" : "Swift", "lastName" : "ObjectiveC", "__v" : 0 }
+	{ "_id" : ObjectId("56c274a8f029d24e47b34ea1"), "username" : "android", "firstName" : "Alphabet", "lastName" : "Google", "__v" : 0 }
+	> db.users.remove()
+	2016-02-20T11:02:51.994-0500 E QUERY    [thread1] Error: remove needs a query :
+	DBCollection.prototype._parseRemove@src/mongo/shell/collection.js:333:1
+	DBCollection.prototype.remove@src/mongo/shell/collection.js:356:18
+	@(shell):1:1
+	
+	> db.users.remove({})
+	WriteResult({ "nRemoved" : 3 })
+	> db.users.find()
+	> 
+
+<i> Create users with passwords </i>
+
+Update <i>server/config/mongoose.js</i>
+
+* Add two private functions to generate salt and a hashed password from the salt and the password. 
+* Add the salt and the hashedPassword fields to the schema "userSchema".
+
+```javascript
+var mongoose = require('mongoose'),
+	crypto = require('crypto');
+
+module.exports = function(config) {
+	/*
+		connect to blogsite database on the local mongoDB server
+	*/
+	mongoose.connect(config.connectionString);
+
+	var db = mongoose.connection;
+
+	db.on('error', console.error.bind(console, 'Failed to connect. Error occurred ...'));
+
+	db.once('open', function() {
+		console.log('Connected to blogsite database');
+	});
+
+	/*
+		Create a schema for users
+
+		Column names and Column types
+	*/
+	var userSchema = mongoose.Schema({   
+			username: String,
+			firstName: String, 
+			lastName: String,
+			salt: String,               <----------
+			hashedPassword: String	    <----------	
+		});
+
+
+	/*
+		Create a User model out of userSchema
+
+		Pass in the collection name and the schema
+
+		Mongoose processes the collection name i.e. 
+			it makes the first letter small and 
+			pluralizes the collection name
+		to represent the collection in the database
+		
+		so, the collection name "User" represents "users" in the "blogsite" database
+	*/
+	var User = mongoose.model('User', userSchema);
+
+	var firstBlog;
+
+	/*
+		Get all the documents from "users" collection by using the find() method on the "User" model
+
+		If there is no user collection, create default users
+	*/
+	User.find({}).exec(function(err, userCollection) {
+		if(userCollection.length == 0) {
+			/*
+				MAKE SURE THAT THE ATTRIBUTE NAMES OF DOCUMENT PASSED TO create() MATCHES WITH ATTRIBUTE NAMES
+				PASSED TO mongoose.Schema
+
+				Any typos would mean missing data.
+
+				For example, if the schema is defined with username as one of its attributes,
+					then passing userName (notice N is caps here) to create() method results in the actual 
+					userName attribute unfilled for that document
+			*/
+
+			var salt = generateSalt();     						<--------
+			var hashedPassword = generateHashedPassword('password1', salt);         <--------
+
+			User.create({username: 'blackberry', firstName: 'Rim', lastName: 'blackberry', salt: salt, hashedPassword: hashedPassword});		<--------
+
+			var salt = generateSalt();						<--------
+			var hashedPassword = generateHashedPassword('password2', salt);		<--------
+
+			User.create({username: 'android', firstName: 'Alphabet', lastName: 'Google', salt: salt, hashedPassword: hashedPassword});
+
+			var salt = generateSalt();						<--------
+			var hashedPassword = generateHashedPassword('password3', salt);		<--------
+
+			User.create({username: 'iphone', firstName: 'Swift', lastName: 'ObjectiveC', salt: salt, hashedPassword: hashedPassword});		<--------
+		}
+	});	
+}
+
+<--------------------------
+function generateSalt() {   
+	return crypto.randomBytes(128).toString('base64');
+}
+
+function generateHashedPassword(password, salt) { 
+	/*
+		pass in the name of the algorithm as the first parameter
+	*/
+	var hmac = crypto.createHmac('sha1', salt);
+
+	/*
+		set the encoding to HEX
+	*/
+	hmac.setEncoding('hex');
+
+	hmac.write(password);
+
+	hmac.end();
+
+	return hmac.read();
+}
+<--------------------------
+```
+
+With nodemon running, saving the changes creates the users in the database.
+
+	> db.users.find()
+	{ "_id" : ObjectId("56c8b83a7cc9b4406da8afbe"), "username" : "blackberry", "firstName" : "Rim", "lastName" : "blackberry", "salt" : "ASR31KIcU9jnb2kBDRyqDjkWgXwffY7DfRpfsFw0nHWxBYo+bNWaQvyd41cpCcyX3nXV+1KccgchOqHPb1EAvoYtWKdPoN5aPX5MLXfCQPWk/XuilYSD6NoacxIDJ6lMRbfKufrCaNMVYlESPhK2mkb7ZV7IRo9PIWNJfSa1nvM=", "hashedPassword" : "3f1e82e905197135b2cabe15ded837f12eefdb5b", "__v" : 0 }
+	{ "_id" : ObjectId("56c8b83a7cc9b4406da8afbf"), "username" : "android", "firstName" : "Alphabet", "lastName" : "Google", "salt" : "pF5n5Xo10U9+OUkSvhhHTQVQgzOsi8308iC6PE70dnzocDPvOx79mksSCNwBawTNeRNnDdkTFVIYK6aDdgaidvAe1VxC1lzA6XZtfUR5WaMCdHiIfLKh8mfXQTyMdBfZN0e4XA9SXxvX6edOf5nkRPYWWx03uboo4NjOAR3eu2M=", "hashedPassword" : "6056b9a677f68eb2880800afec01bacda0944218", "__v" : 0 }
+	{ "_id" : ObjectId("56c8b83a7cc9b4406da8afc0"), "username" : "iphone", "firstName" : "Swift", "lastName" : "ObjectiveC", "salt" : "beK4wlYH9E7Y4wcKTmPvKTcdAKOTY1EjGXkLzuEVzS/NpKCyzC6XYzoE/8ZrRKo/s7rLdgibqNGvhzABt3W+PYn6cVGo5rvY5FLSuG9lTt5B81BddsCqaKjl4B9WGT9V7JNbiA+T8TnxCVx6kbuPf9dFH1lKdO/8YgeJlaQslZ0=", "hashedPassword" : "1fb0bbdc072535dfcccf8c256ce5422e7d512be6", "__v" : 0 }
+
+<i> Authenticate Users </i>
+
+Add a method "authenticate" to "userSchema" to be made available to "User" models in <i>server/config/mongoose.js</i>. This method can be used to compare the the user entered password with the password from the database.
+
+<i>server/config/mongoose.js</i>
+
+```javascript
+var mongoose = require('mongoose'),
+	crypto = require('crypto');
+
+module.exports = function(config) {
+	/*
+		connect to blogsite database on the local mongoDB server
+	*/
+	mongoose.connect(config.connectionString);
+
+	var db = mongoose.connection;
+
+	db.on('error', console.error.bind(console, 'Failed to connect. Error occurred ...'));
+
+	db.once('open', function() {
+		console.log('Connected to blogsite database');
+	});
+
+	/*
+		Create a schema for users
+
+		Column names and Column types
+	*/
+	var userSchema = mongoose.Schema({
+			username: String,
+			firstName: String, 
+			lastName: String,
+			salt: String,
+			hashedPassword: String		
+		});
+
+	userSchema.methods = {   <---------------------------------------
+		authenticate: function(userProvidedPassword) {
+			return generateHashedPassword(userProvidedPassword, this.salt) === this.hashedPassword;
+		}
+	};
+
+	/*
+		Create a User model out of userSchema
+
+		Pass in the collection name and the schema
+
+		Mongoose processes the collection name i.e. 
+			it makes the first letter small and 
+			pluralizes the collection name
+		to represent the collection in the database
+		
+		so, the collection name "User" represents "users" in the "blogsite" database
+	*/
+	var User = mongoose.model('User', userSchema);
+
+	var firstBlog;
+
+	/*
+		Get all the documents from "users" collection by using the find() method on the "User" model
+
+		If there is no user collection, create default users
+	*/
+	User.find({}).exec(function(err, userCollection) {
+		if(userCollection.length == 0) {
+			/*
+				MAKE SURE THAT THE ATTRIBUTE NAMES OF DOCUMENT PASSED TO create() MATCHES WITH ATTRIBUTE NAMES
+				PASSED TO mongoose.Schema
+
+				Any typos would mean missing data.
+
+				For example, if the schema is defined with username as one of its attributes,
+					then passing userName (notice N is caps here) to create() method results in the actual 
+					userName attribute unfilled for that document
+			*/
+
+			var salt = generateSalt();
+			var hashedPassword = generateHashedPassword('password1', salt);
+
+			User.create({username: 'blackberry', firstName: 'Rim', lastName: 'blackberry', salt: salt, hashedPassword: hashedPassword});
+
+			var salt = generateSalt();
+			var hashedPassword = generateHashedPassword('password2', salt);
+
+			User.create({username: 'android', firstName: 'Alphabet', lastName: 'Google', salt: salt, hashedPassword: hashedPassword});
+
+			var salt = generateSalt();
+			var hashedPassword = generateHashedPassword('password3', salt);
+
+			User.create({username: 'iphone', firstName: 'Swift', lastName: 'ObjectiveC', salt: salt, hashedPassword: hashedPassword});
+		}
+	});	
+}
+
+function generateSalt() {
+	return crypto.randomBytes(128).toString('base64');
+}
+
+function generateHashedPassword(password, salt) {
+	/*
+		pass in the name of the algorithm as the first parameter
+	*/
+	var hmac = crypto.createHmac('sha1', salt);
+
+	/*
+		set the encoding to HEX
+	*/
+	hmac.setEncoding('hex');
+
+	hmac.write(password);
+
+	hmac.end();
+
+	return hmac.read();
+}
+```
+
+Invoke the method with the user entered password to check if the password is valid. 
+
+<i>server/config/passport.js</i>
+
+```javascript
+var passport = require('passport'),
+	LocalStrategy = require('passport-local').Strategy,
+	mongoose = require('mongoose'),
+	User = mongoose.model('User');
+
+	/*
+		passport implements authentication as strategies
+
+		passport-local's strategy allows authentication by means of usernames and password that can be stored in our own database
+	*/
+
+module.exports = function() {
+	/*
+		Configure passport to use LocalStrategy.
+
+		Pass in a function to LocalStrategy
+	*/
+	passport.use(new LocalStrategy(
+			function(username, password, done) {
+				/*
+					Implement custom code here to verify if the username and password are valid
+
+					Use the "User" model defined earlier to verify if the username and password are valid
+
+					Once the findOne() function returns, the callback registered with exec() function is executed.
+
+					If the user exists in the database it is passed to the callback to the second parameter, else a null is passed. 
+				*/
+
+				User.findOne({username:username}).exec(function(err, user) {
+					if(user && user.authenticate(password)) {	<---------------
+						return done(null, user);
+					} else {
+						return done(null, false);
+					}
+				});
+			}		
+		));
+
+	/*
+		Let passport know how to serialize and deserialize user
+
+		The serializeUser takes in a user and a done callback
+	*/
+	passport.serializeUser(function(user, done) {
+		if(user) {
+			/*
+				if the user exists, call done by passing null and the user._id. The user._id passed here will be received in 
+					passport.deserializeUser() method
+			*/
+			done(null, user._id);
+		}
+	});
+
+	passport.deserializeUser(function(id, done) {
+		/*
+			Look up the User by id using findOne() method. The id passed here is the user._id sent from passport.serializeUser() function
+
+			Register a callback by passing it to exec() function. The callback is executed after findOne() returns.
+
+			Check in the callback if the user exists and call done
+		*/
+		User.findOne({_id:id}).exec(function(err, user) {
+			if(user) {
+				return done(null, user);
+			} else {
+				return done(null, false);
+			}
+		}) 
+	});
+}
+```
+
