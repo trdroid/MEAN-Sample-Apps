@@ -1,4 +1,5 @@
-var mongoose = require('mongoose');
+var mongoose = require('mongoose'),
+	crypto = require('crypto');
 
 module.exports = function(config) {
 	/*
@@ -22,9 +23,16 @@ module.exports = function(config) {
 	var userSchema = mongoose.Schema({
 			username: String,
 			firstName: String, 
-			lastName: String,		
+			lastName: String,
+			salt: String,
+			hashedPassword: String		
 		});
 
+	userSchema.methods = {
+		authenticate: function(userProvidedPassword) {
+			return generateHashedPassword(userProvidedPassword, this.salt) === this.hashedPassword;
+		}
+	};
 
 	/*
 		Create a User model out of userSchema
@@ -59,9 +67,43 @@ module.exports = function(config) {
 					then passing userName (notice N is caps here) to create() method results in the actual 
 					userName attribute unfilled for that document
 			*/
-			User.create({username: 'blackberry', firstName: 'Rim', lastName: 'blackberry'});
-			User.create({username: 'android', firstName: 'Alphabet', lastName: 'Google'});
-			User.create({username: 'iphone', firstName: 'Swift', lastName: 'ObjectiveC'});
+
+			var salt = generateSalt();
+			var hashedPassword = generateHashedPassword('password1', salt);
+
+			User.create({username: 'blackberry', firstName: 'Rim', lastName: 'blackberry', salt: salt, hashedPassword: hashedPassword});
+
+			var salt = generateSalt();
+			var hashedPassword = generateHashedPassword('password2', salt);
+
+			User.create({username: 'android', firstName: 'Alphabet', lastName: 'Google', salt: salt, hashedPassword: hashedPassword});
+
+			var salt = generateSalt();
+			var hashedPassword = generateHashedPassword('password3', salt);
+
+			User.create({username: 'iphone', firstName: 'Swift', lastName: 'ObjectiveC', salt: salt, hashedPassword: hashedPassword});
 		}
 	});	
+}
+
+function generateSalt() {
+	return crypto.randomBytes(128).toString('base64');
+}
+
+function generateHashedPassword(password, salt) {
+	/*
+		pass in the name of the algorithm as the first parameter
+	*/
+	var hmac = crypto.createHmac('sha1', salt);
+
+	/*
+		set the encoding to HEX
+	*/
+	hmac.setEncoding('hex');
+
+	hmac.write(password);
+
+	hmac.end();
+
+	return hmac.read();
 }
