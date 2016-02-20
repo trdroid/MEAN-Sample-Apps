@@ -2586,20 +2586,20 @@ module.exports = function(config) {
 					userName attribute unfilled for that document
 			*/
 
-			var salt = generateSalt();
-			var hashedPassword = generateHashedPassword(salt, 'password1');
+			var salt = generateSalt();     						<--------
+			var hashedPassword = generateHashedPassword(salt, 'password1');         <--------
 
-			User.create({username: 'blackberry', firstName: 'Rim', lastName: 'blackberry', salt: salt, hashedPassword: hashedPassword});
+			User.create({username: 'blackberry', firstName: 'Rim', lastName: 'blackberry', salt: salt, hashedPassword: hashedPassword});		<--------
 
-			var salt = generateSalt();
-			var password = generateHashedPassword(salt, 'password2');
+			var salt = generateSalt();						<--------
+			var password = generateHashedPassword(salt, 'password2');		<--------
 
 			User.create({username: 'android', firstName: 'Alphabet', lastName: 'Google', salt: salt, hashedPassword: hashedPassword});
 
-			var salt = generateSalt();
-			var password = generateHashedPassword(salt, 'password3');
+			var salt = generateSalt();						<--------
+			var password = generateHashedPassword(salt, 'password3');		<--------
 
-			User.create({username: 'iphone', firstName: 'Swift', lastName: 'ObjectiveC', salt: salt, hashedPassword: hashedPassword});
+			User.create({username: 'iphone', firstName: 'Swift', lastName: 'ObjectiveC', salt: salt, hashedPassword: hashedPassword});		<--------
 		}
 	});	
 }
