@@ -2417,3 +2417,75 @@ angular.module('app').controller('mvMainController', function($scope, $http, mvT
 	}
 });
 ```
+
+### Refactoring
+
+Separate out the code for signing in from "mvMainController" into a separate service.
+
+Create a new service called "mvAuthenticate" in common/mvAuthenticate.js
+
+```javascript
+/*
+	Add the $q service as a dependency so that the mvAuthenticate service can communicate with the controller using a promise
+	about the status of the login
+*/
+angular.module('app').factory('mvAuthenticate', function($http, mvUserIdentity, $q) {
+	return {
+		authenticateUser: function(username, password) {
+			//Create a promise to communicate with the controller
+			var deferred = $q.defer();
+
+			$http.post('/signin', {username: username, password: password}).then(function (response) {
+				if(response.data.success) {				
+					mvUserIdentity.user = response.data.user;	
+
+					//resolve the deferred to true
+					deferred.resolve(true);
+				} else {					
+					deferred.resolve(false);
+				}
+			});
+
+			//return promise for the deferred
+			return deferred.promise;
+		}
+	}
+});
+```
+
+<img src="mvAuthenticate%20in%20project%20structure.png"/>
+
+
+Declare the newly created service "mvAuthenticate" as a dependency in "mvMainController" and refactor the code to delegate the call to login to the service
+
+```javascript
+angular.module('app').controller('mvMainController', function($scope, $http, mvToastrNotifier, mvUserIdentity, mvAuthenticate) {  <------
+	$scope.userIdentity = mvUserIdentity;
+
+	$scope.signin = function(username, password) {   
+		mvAuthenticate.authenticateUser(username, password).then(function(success) {  <--------
+			if(success) {
+				mvToastrNotifier.notify('Successfully signed in', true);
+			} else {
+				mvToastrNotifier.notify('Username/password is incorrect', false);
+			}
+		});
+	}
+});
+```
+
+Include a reference to the new service script in scripts.jade
+
+```jade
+script(type="text/javascript", src="/vendor/jquery/dist/jquery.js")
+script(type="text/javascript", src="/vendor/angular/angular.js")
+script(type="text/javascript", src="/vendor/angular-resource/angular-resource.js")
+script(type="text/javascript", src="/vendor/angular-route/angular-route.js")
+script(type="text/javascript", src="/vendor/toastr/toastr.js")
+script(type="text/javascript", src="/client/app.js")
+script(type="text/javascript", src="/client/home/mvMainController.js")
+script(type="text/javascript", src="/client/common/mvNavBarController.js")
+script(type="text/javascript", src="/client/common/mvToastrNotifier.js")
+script(type="text/javascript", src="/client/common/mvUserIdentity.js")
+script(type="text/javascript", src="/client/common/mvAuthenticate.js")  <----------
+```
