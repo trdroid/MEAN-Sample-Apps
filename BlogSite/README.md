@@ -2587,17 +2587,17 @@ module.exports = function(config) {
 			*/
 
 			var salt = generateSalt();     						<--------
-			var hashedPassword = generateHashedPassword(salt, 'password1');         <--------
+			var hashedPassword = generateHashedPassword('password1', salt);         <--------
 
 			User.create({username: 'blackberry', firstName: 'Rim', lastName: 'blackberry', salt: salt, hashedPassword: hashedPassword});		<--------
 
 			var salt = generateSalt();						<--------
-			var password = generateHashedPassword(salt, 'password2');		<--------
+			var password = generateHashedPassword('password2', salt);		<--------
 
 			User.create({username: 'android', firstName: 'Alphabet', lastName: 'Google', salt: salt, hashedPassword: hashedPassword});
 
 			var salt = generateSalt();						<--------
-			var password = generateHashedPassword(salt, 'password3');		<--------
+			var password = generateHashedPassword('password3', salt);		<--------
 
 			User.create({username: 'iphone', firstName: 'Swift', lastName: 'ObjectiveC', salt: salt, hashedPassword: hashedPassword});		<--------
 		}
@@ -2609,7 +2609,7 @@ function generateSalt() {
 	return crypto.randomBytes(128).toString('base64');
 }
 
-function generateHashedPassword(salt, password) { 
+function generateHashedPassword(password, salt) { 
 	/*
 		pass in the name of the algorithm as the first parameter
 	*/
