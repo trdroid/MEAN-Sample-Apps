@@ -3091,6 +3091,8 @@ After adding favicon.ico, the server output is as follows
 
 The catch-all route handler is called only once, which serves the index page. The request for favicon.ico is handled by the express's static middleware by serving BlogSite/public/favicon.ico file.
 
+<b> favicon.ico, as seen in the browser tab </b>
+
 <img src="_misc/favicon.ico%20file%20in%20browser.png"/>
 
-
+### 
