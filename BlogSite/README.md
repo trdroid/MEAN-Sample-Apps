@@ -2844,7 +2844,7 @@ Attach an onClick handler to the sign-out button in the scope of mvNavBarControl
 ```jade
 div(ng-controller="mvNavBarController")
 	a.btn.btn-primary(ng-click="onAboutClick()") About	
-	a.btn.btn-primary(ng-show="userIdentity.isUserAuthenticated()", ng-click="signout()")  {{userIdentity.user.firstName + " " + userIdentity.user.lastName}} Logout	
+	a.btn.btn-primary(ng-show="userIdentity.isUserAuthenticated()", ng-click="signout()"	 {{userIdentity.user.firstName + " " + userIdentity.user.lastName}} Logout	<--------------
 ```
 
 <b> Implement the signout handler in the scope of mvNavBarController </b>
