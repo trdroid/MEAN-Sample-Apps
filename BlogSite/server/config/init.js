@@ -4,8 +4,6 @@ var express = require('express'),
 	session = require('express-session'),
 	passport = require('passport');
 
-var app = express();
-
 module.exports = function(app, config) {
 	/*
 		set the views property to the path where the views are located
