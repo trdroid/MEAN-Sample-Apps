@@ -3017,3 +3017,80 @@ After hitting logout ...
 
 <img src="_misc/after%20signing%20out.png"/>
 
+### Adding favicon.ico
+
+Adding log statements to the catch-all route handler in routes.js revealed about the missing favicon.ico file.
+
+```javascript
+var authentication = require('./authenticate');
+
+module.exports = function(app) {
+
+	app.post('/signin', authentication.authenticate);
+
+	app.post('/signout', function(req, res) {
+		/*
+			the logout function was added to the request object by the passport module
+
+			As the client handles all views in this case, the redirection on the server-side is not necessary
+		*/
+		req.logout();
+		res.end();
+	});
+	/*
+		The angular app sends XHR requests to /partials/*, which are handled here.
+
+		For example, a request to /partials/home/root implies that req.params[0] is home/root, which then 
+			attempts to render ../../public/client/home/root.jade. Since the views are configured to be found from /server/views
+			directory, ../../ refers to projects root directory, so the file ../../public/client/home/root.jade refers to
+			BlogSite/public/client/home/root.jade, which is what would be rendered
+	*/
+	app.get('/partials/*', function(req, res) {
+		res.render('../../public/client/' + req.params[0]);
+	});
+
+
+	/*
+		a catch-all route handler to serve up the index page when a request is made to a path that the server does not handle
+
+		The index page is served to the client where angular handles routing (as this is a single page application)
+	*/
+	app.get('*', function(req, res) {
+		/*
+			The following did not work
+
+			blogEntry: firstBlog
+
+			Tried passing a model object to index.jade and tried accessing title and content properties as
+				blogEntry.title and blogEntry.content in index.jade, which resulted in an error				
+		*/
+
+		/*
+			pass an object with title and content properties to index.jade
+		*/
+		console.log("URL Requested:" + req.url);   <----------------
+		console.log('Serving index page');
+		res.render('index');
+	});	
+}
+```
+
+When a request is made to the app, the following is printed in the console
+
+	URL Requested:/
+	Serving index page
+	URL Requested:/favicon.ico
+	Serving index page
+
+To avoid serving the index page a second time, add favicon.ico file to the directory configured as the directory for static (fixed) assets (BlogSite/public/) with express's static middleware.
+
+After adding favicon.ico, the server output is as follows
+
+	URL Requested:/
+	Serving index page
+
+The catch-all route handler is called only once, which serves the index page. The request for favicon.ico is handled by the express's static middleware by serving BlogSite/public/favicon.ico file.
+
+<img src="_misc/favicon.ico%20file%20in%20browser.png"/>
+
+
