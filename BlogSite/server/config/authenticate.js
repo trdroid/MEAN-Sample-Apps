@@ -5,7 +5,7 @@ exports.authenticate = function(req, res, next) {
 			specify passport.authenticate the strategy being used ('local' in this case)
 
 			passport authenticate returns a function that needs to be called next
-		*/
+		*/		
 		var auth = passport.authenticate('local', function(err, user) {
 			/*
 				In case of an error, pass it on
@@ -44,7 +44,7 @@ exports.authenticate = function(req, res, next) {
 					if login was successful, send to the client a JSON object with success property as true indicating about successful login,
 						and the user object in the user property
 				*/
-				res.send({success:true, user: user});
+				res.send({success:true, user: user});				
 			});
 		});
 

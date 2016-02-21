@@ -1,8 +1,18 @@
 var authentication = require('./authenticate');
 
 module.exports = function(app) {
+
 	app.post('/signin', authentication.authenticate);
 
+	app.post('/signout', function(req, res) {
+		/*
+			the logout function was added to the request object by the passport module
+
+			As the client handles all views in this case, the redirection on the server-side is not necessary
+		*/
+		req.logout();
+		res.end();
+	});
 	/*
 		The angular app sends XHR requests to /partials/*, which are handled here.
 
@@ -34,6 +44,8 @@ module.exports = function(app) {
 		/*
 			pass an object with title and content properties to index.jade
 		*/
+		console.log("URL Requested:" + req.url);
+		console.log('Serving index page');
 		res.render('index');
 	});	
 }
