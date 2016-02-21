@@ -2847,7 +2847,7 @@ div(ng-controller="mvNavBarController")
 	a.btn.btn-primary(ng-show="userIdentity.isUserAuthenticated()", ng-click="signout()")  {{userIdentity.user.firstName + " " + userIdentity.user.lastName}} Logout	
 ```
 
-Implement the signout handler in the scope of mvNavBarController
+<b> Implement the signout handler in the scope of mvNavBarController </b>
 
 <i>mvNavBarController.js</i>
 
@@ -2883,7 +2883,7 @@ angular.module('app').controller('mvNavBarController', function($scope, mvUserId
 });
 ```
 
-Implement a new service "mvSharedService" which is used above.
+<b> Implement a new service "mvSharedService" which is used above. </b>
 
 <i>mvSharedService.js</i>
 
@@ -2900,7 +2900,7 @@ angular.module('app').factory('mvSharedService', function($rootScope) {
 });
 ```
 
-Implement the "signoutUser" method in "mvAuthenticate" service used above.
+<b> Implement the "signoutUser" method in "mvAuthenticate" service used above. </b>
 
 <i>mvAuthenticate.js</i>
 
@@ -3007,4 +3007,9 @@ module.exports = function(app) {
 }
 ```
 
+<b> Snapshots </b>
+
+<img src="_misc/after%20signing%20in.png"/>
+
+<img src="_misc/after%20signing%20out.png"/>
 
