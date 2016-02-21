@@ -2832,3 +2832,179 @@ module.exports = function() {
 }
 ```
 
+### Signing Out
+
+Show the signout button after a user has logged in (which is indicated by userIdentity.isUserAuthenticated()).
+Attach an onClick handler to the sign-out button in the scope of mvNavBarController.
+
+<b>Adding a button to signout</b>
+
+<i>navbar-controls.jade</i>
+
+```jade
+div(ng-controller="mvNavBarController")
+	a.btn.btn-primary(ng-click="onAboutClick()") About	
+	a.btn.btn-primary(ng-show="userIdentity.isUserAuthenticated()", ng-click="signout()")  {{userIdentity.user.firstName + " " + userIdentity.user.lastName}} Logout	
+```
+
+Implement the signout handler in the scope of mvNavBarController
+
+<i>mvNavBarController.js</i>
+
+```javascript
+angular.module('app').controller('mvNavBarController', function($scope, mvUserIdentity, mvAuthenticate, mvToastrNotifier, $location, mvSharedService) {  	<------------
+	$scope.userIdentity = mvUserIdentity;
+
+	$scope.onAboutClick = function() {
+		console.log('About clicked ...');
+	}
+
+	$scope.signout = function() {				<----------------
+		mvAuthenticate.signoutUser().then(function() {  
+			mvToastrNotifier.notify('Signed out!!', true);
+
+			/*
+				The models of username and password controls are in mvMainController's scope.
+
+				When the user clicks on logout which is managed by mvNavBarController, there should be a way for mvNavBarController
+					to clear the username and password input controls that are managed by mvMainController
+
+				To implement this, a service "mvSharedService" is implemented.
+
+				This service has a method to broadcast a message on $rootScope.
+
+				mvMainController listens for this message and has an event handler registered that gets executed on the occurrence of this event.
+					The event handler clears the models, username and password, consequently clearing the username and password input controls.			
+			*/
+			mvSharedService.clearSigninInputs();
+			$location.path('/');						
+		})
+	}
+});
+```
+
+Implement a new service "mvSharedService" which is used above.
+
+<i>mvSharedService.js</i>
+
+```javascript
+angular.module('app').factory('mvSharedService', function($rootScope) {
+	return {
+		clearSigninInputs: function() {
+			/*
+				broadcast a message to clear the username and password controls, the models of which are in mvMainController's scope
+			*/
+			$rootScope.$broadcast('clear');
+		}
+	}
+});
+```
+
+Implement the "signoutUser" method in "mvAuthenticate" service used above.
+
+<i>mvAuthenticate.js</i>
+
+```javascript
+/*
+	Add the $q service as a dependency so that the mvAuthenticate service can communicate with the controller using a promise
+	about the status of the login
+*/
+angular.module('app').factory('mvAuthenticate', function($http, mvUserIdentity, $q) {
+	return {
+		authenticateUser: function(username, password) {
+			//Create a promise to communicate with the controller
+			var deferred = $q.defer();
+
+			$http.post('/signin', {username: username, password: password}).then(function (response) {
+				if(response.data.success) {				
+					mvUserIdentity.user = response.data.user;	
+
+					//resolve the deferred to true
+					deferred.resolve(true);
+				} else {					
+					deferred.resolve(false);
+				}
+			});
+
+			//return promise for the deferred
+			return deferred.promise;
+		},
+
+		signoutUser: function() { 			<----------------------------------
+			var deferred = $q.defer();
+
+			/*
+				Send a POST request to /signout
+				Pass in a body, otherwise Angular will treat POST as a GET
+			*/
+			$http.post('/signout', {signout: true}).then(function() {
+				/*
+					when it returns, set the user as undefined, and resolve the deferred
+
+					Finally return the deferred promise
+				*/
+				mvUserIdentity.user = undefined;
+
+				deferred.resolve();
+			});
+
+			return deferred.promise;
+		}
+	}
+});
+```
+
+<b> Implementing the signout route on the server-side</b>
+
+```javascript
+var authentication = require('./authenticate');
+
+module.exports = function(app) {
+	app.post('/signin', authentication.authenticate);
+
+	app.post('/signout', function(req, res) {    <--------------------------------------
+		/*
+			the logout function was added to the request object by the passport module
+
+			As the client handles all views in this case, the redirection on the server-side is not necessary
+		*/
+		req.logout();
+		res.end();
+	});
+	/*
+		The angular app sends XHR requests to /partials/*, which are handled here.
+
+		For example, a request to /partials/home/root implies that req.params[0] is home/root, which then 
+			attempts to render ../../public/client/home/root.jade. Since the views are configured to be found from /server/views
+			directory, ../../ refers to projects root directory, so the file ../../public/client/home/root.jade refers to
+			BlogSite/public/client/home/root.jade, which is what would be rendered
+	*/
+	app.get('/partials/*', function(req, res) {
+		res.render('../../public/client/' + req.params[0]);
+	});
+
+
+	/*
+		a catch-all route handler to serve up the index page when a request is made to a path that the server does not handle
+
+		The index page is served to the client where angular handles routing (as this is a single page application)
+	*/
+	app.get('*', function(req, res) {
+		/*
+			The following did not work
+
+			blogEntry: firstBlog
+
+			Tried passing a model object to index.jade and tried accessing title and content properties as
+				blogEntry.title and blogEntry.content in index.jade, which resulted in an error				
+		*/
+
+		/*
+			pass an object with title and content properties to index.jade
+		*/
+		res.render('index');
+	});	
+}
+```
+
+
