@@ -3009,7 +3009,11 @@ module.exports = function(app) {
 
 <b> Snapshots </b>
 
+After signing in ... 
+
 <img src="_misc/after%20signing%20in.png"/>
+
+After hitting logout ...
 
 <img src="_misc/after%20signing%20out.png"/>
 
