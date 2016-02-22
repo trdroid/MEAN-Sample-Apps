@@ -21,10 +21,15 @@ module.exports = function(app, config) {
 		The following is needed to configure passport
 			as stated in http://passportjs.org/docs/configure
 	*/
+
 	app.use(cookieParser());
+
 	app.use(bodyParser());
+
 	app.use(session({secret: 'blogsite best Android apps'}));
+
 	app.use(passport.initialize());
+
 	app.use(passport.session());
 
 	/*
