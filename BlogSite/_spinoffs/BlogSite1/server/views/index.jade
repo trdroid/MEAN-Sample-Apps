@@ -1,0 +1,9 @@
+extends ../layouts/main_layout
+
+block main-content
+	.navbar.navbar-default
+		.navbar-header
+			a.navbar-brand(href='/') BlogSite
+			div(ng-include="'/partials/common/navbar-controls'")
+
+	div(ng-view)
