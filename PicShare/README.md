@@ -103,7 +103,26 @@ Create a group that is assigned with administrative privileges, so that users wh
 
 <img src="_misc/Creating%20a%20group.png"/>
 
+Click next without attaching any managed policies to the group.
+
 <img src="_misc/Attach%20Policy%20Screen.png"/>
+
+Create the group
 
 <img src="_misc/Review%20Group.png"/>
 
+The group is now created.
+
+<img src="_misc/Group%20Created.png"/>
+
+Click on the group, which displays the following
+
+<img src="_misc/Click%20on%20the%20group.png"/>
+
+View the "permission" tab
+
+<img src="_misc/Permission%20tab%20of%20the%20Group.png"/>
+
+Expand "Inline Policy"
+
+<img src="_misc/Inline%20policy%20of%20the%20group.png"/>
