@@ -135,7 +135,7 @@ Clicking on "select" opens up the Edit permissions screen
 
 <img src="_misc/Edit%20Permissions%20screen%20of%20Policy%20Generator.png"/>
 
-In this screen, grant all the services and the corresponding actions on the services that an Administrator is allowed to handle. 
+In this screen, grant all the services and the corresponding actions on the services that any of the app's Administrators is allowed to handle. 
 
 Grant Access to the following services for the app's Administrator's group:
 
