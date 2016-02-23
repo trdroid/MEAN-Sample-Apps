@@ -135,3 +135,37 @@ Clicking on "select" opens up the Edit permissions screen
 
 <img src="_misc/Edit%20Permissions%20screen%20of%20Policy%20Generator.png"/>
 
+In this screen, grant all the services and the corresponding actions on the services that an Administrator is allowed to handle. 
+
+Grant Access to the following services for the app's Administrator's group:
+
+* AWS OpsWorks
+* Amazon EC2
+* Amazon RDS
+* Amazon S3
+* Amazon CloudFront
+* Amazon Route53
+
+<img src="_misc/Granting%20AWS%20OpsWorks%20Permission.png"/>
+
+<img src="_misc/After%20adding%20the%20statement%20for%20AWS%20OpsWorks.png"/>
+
+<img src="_misc/Selecting%20Amazon%20EC2%20Service.png"/>
+
+<img src="_misc/After%20Adding%20Amazon%20EC2%20Service.png"/>
+
+<img src="_misc/Adding%20Amazon%20RDS%20Service.png"/>
+
+<img src="_misc/After%20Adding%20Amazon%20RDS%20Service.png"/>
+
+<img src="_misc/Adding%20Amazon%20S3%20Service.png"/>
+
+<img src=""_misc/After%20Adding%20Amazon%20S3%20Service.png/>
+
+<img src="_misc/Adding%20Amazon%20CloudFront%20Service.png"/>
+
+<img src="_misc/After%20Adding%20Amazon%20CloudFront%20Service.png"/>
+
+<img src="_misc/Adding%20Amazon%20Route%2053%20Service.png"/>
+
+<img src="_misc/After%20Adding%20Amazon%20Route%2053%20Service.png"/>
