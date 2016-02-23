@@ -160,7 +160,7 @@ Grant Access to the following services for the app's Administrator's group:
 
 <img src="_misc/Adding%20Amazon%20S3%20Service.png"/>
 
-<img src=""_misc/After%20Adding%20Amazon%20S3%20Service.png/>
+<img src="_misc/After%20Adding%20Amazon%20S3%20Service.png"/>
 
 <img src="_misc/Adding%20Amazon%20CloudFront%20Service.png"/>
 
