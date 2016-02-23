@@ -97,3 +97,13 @@
      ├── transformers@2.1.0 (promise@2.0.0, css@1.0.8, uglify-js@2.2.5)
      └── uglify-js@2.6.2 (async@0.2.10, uglify-to-browserify@1.0.2, source-map@0.5.3, yargs@3.10.0)
 
+### Create a Group
+
+Create a group that is assigned with administrative privileges, so that users who are meant to administer the app can be assigned to this group. 
+
+<img src="_misc/Creating%20a%20group.png"/>
+
+<img src="_misc/Attach%20Policy%20Screen.png"/>
+
+<img src="_misc/Review%20Group.png"/>
+
