@@ -123,6 +123,6 @@ View the "permission" tab
 
 <img src="_misc/Permission%20tab%20of%20the%20Group.png"/>
 
-Expand "Inline Policy"
+Expand "Inline Policies"
 
 <img src="_misc/Inline%20policy%20of%20the%20group.png"/>
