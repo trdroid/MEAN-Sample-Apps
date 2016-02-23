@@ -126,3 +126,12 @@ View the "permission" tab
 Expand "Inline Policies"
 
 <img src="_misc/Inline%20policy%20of%20the%20group.png"/>
+
+Click on "Click Here"
+
+<img src="_misc/after%20expanding%20inline%20policies.png"/>
+
+Clicking on "select" opens up the Edit permissions screen
+
+<img src="_misc/Edit%20Permissions%20screen%20of%20Policy%20Generator.png"/>
+
