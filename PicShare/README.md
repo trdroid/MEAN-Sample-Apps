@@ -195,3 +195,17 @@ Click on Users
 <img src="_misc/Add%20admin%20user%20to%20Admins%20Group.png"/>
 
 <img src="_misc/After%20admin%20user%20is%20added%20to%20the%20Admins%20group.png"/>
+
+<img src="_misc/Security%20Credentials%20Tab%20for%20the%20Admin%20User.png"/>
+
+<img src="_misc/Manage%20Password%20Screen.png"/>
+
+<img src="_misc/Allow%20User%20to%20Create%20a%20New%20Password%20at%20Next%20Sign%20In.png"/>
+
+<img src="_misc/Password%20Generated%20Screen.png"/>
+
+<img src="_misc/Showing%20Generated%20Password.png"/>
+
+<img src="_misc/Downloading%20Credentials.png"/>
+
+<img src="_misc/Set%20Password%20Policy.png"/>
