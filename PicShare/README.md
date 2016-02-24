@@ -123,6 +123,8 @@ View the "permission" tab
 
 <img src="_misc/Permission%20tab%20of%20the%20Group.png"/>
 
+### Create an Inline Policy
+
 Expand "Inline Policies"
 
 <img src="_misc/Inline%20policy%20of%20the%20group.png"/>
@@ -171,6 +173,8 @@ Grant Access to the following services for the app's Administrator's group:
 Hit Next Step
 
 <img src="_misc/After%20Adding%20Amazon%20Route%2053%20Service.png"/>
+
+### Apply Policy to the Group
 
 Hit Apply Policy
 
