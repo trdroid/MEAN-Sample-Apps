@@ -209,3 +209,7 @@ Click on Users
 <img src="_misc/Downloading%20Credentials.png"/>
 
 <img src="_misc/Set%20Password%20Policy.png"/>
+
+### IAM Users Sign-In Link
+
+<img src="_misc/IAM%20Users%20Sign-in%20link.png"/>
