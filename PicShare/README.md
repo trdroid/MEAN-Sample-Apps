@@ -177,3 +177,21 @@ Hit Apply Policy
 <img src="_misc/Policy%20Name%20and%20Policy%20Document.png"/>
 
 <img src="_misc/After%20creating%20an%20inline%20policy%20for%20a%20group.png"/>
+
+### Create an Admin user for the app
+
+Click on Users
+
+<img src="_misc/Create%20New%20Users.png"/>
+
+<img src="_misc/Create%20User%20Interface.png"/>
+
+<img src="_misc/Create%20an%20Admin%20user.png"/>
+
+<img src="_misc/After%20Creating%20the%20User.png"/>
+
+<img src="_misc/User%20Details.png"/>
+
+<img src="_misc/Add%20admin%20user%20to%20Admins%20Group.png"/>
+
+<img src="_misc/After%20admin%20user%20is%20added%20to%20the%20Admins%20group.png"/>
