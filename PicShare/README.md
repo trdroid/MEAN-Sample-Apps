@@ -168,9 +168,11 @@ Grant Access to the following services for the app's Administrator's group:
 
 <img src="_misc/Adding%20Amazon%20Route%2053%20Service.png"/>
 
+Hit Next Step
+
 <img src="_misc/After%20Adding%20Amazon%20Route%2053%20Service.png"/>
 
-Hit Next Step
+Hit Apply Policy
 
 <img src="_misc/Policy%20Name%20and%20Policy%20Document.png"/>
 
