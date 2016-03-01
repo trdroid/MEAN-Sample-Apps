@@ -109,40 +109,33 @@ Click next without attaching any managed policies to the group.
 
 Create the group
 
-![]()
-<img src="_misc/Review%20Group.png"/>
+![](_misc/Review%20Group.png)
 
 The group is now created.
 
-![]()
-<img src="_misc/Group%20Created.png"/>
+![](_misc/Group%20Created.png)
 
 Click on the group, which displays the following
 
-![]()
-<img src="_misc/Click%20on%20the%20group.png"/>
+![](_misc/Click%20on%20the%20group.png)
 
 View the "permission" tab
 
-![]()
-<img src="_misc/Permission%20tab%20of%20the%20Group.png"/>
+![](_misc/Permission%20tab%20of%20the%20Group.png)
 
 ### Create an Inline Policy
 
 Expand "Inline Policies"
 
-![]()
-<img src="_misc/Inline%20policy%20of%20the%20group.png"/>
+![](_misc/Inline%20policy%20of%20the%20group.png)
 
 Click on "Click Here"
 
-![]()
-<img src="_misc/after%20expanding%20inline%20policies.png"/>
+![](_misc/after%20expanding%20inline%20policies.png)
 
 Clicking on "select" opens up the Edit permissions screen
 
-![]()
-<img src="_misc/Edit%20Permissions%20screen%20of%20Policy%20Generator.png"/>
+![](_misc/Edit%20Permissions%20screen%20of%20Policy%20Generator.png)
 
 In this screen, grant all the services and the corresponding actions on the services that any of the app's Administrators is allowed to handle. 
 
@@ -155,53 +148,39 @@ Grant Access to the following services for the app's Administrator's group:
 * Amazon CloudFront
 * Amazon Route53
 
-![]()
-<img src="_misc/Granting%20AWS%20OpsWorks%20Permission.png"/>
+![](_misc/Granting%20AWS%20OpsWorks%20Permission.png)
 
-![]()
-<img src="_misc/After%20adding%20the%20statement%20for%20AWS%20OpsWorks.png"/>
+![](_misc/After%20adding%20the%20statement%20for%20AWS%20OpsWorks.png)
 
-![]()
-<img src="_misc/Selecting%20Amazon%20EC2%20Service.png"/>
+![](_misc/Selecting%20Amazon%20EC2%20Service.png)
 
-![]()
-<img src="_misc/After%20Adding%20Amazon%20EC2%20Service.png"/>
+![](_misc/After%20Adding%20Amazon%20EC2%20Service.png)
 
-![]()
-<img src="_misc/Adding%20Amazon%20RDS%20Service.png"/>
+![](_misc/Adding%20Amazon%20RDS%20Service.png)
 
-![]()
-<img src="_misc/After%20Adding%20Amazon%20RDS%20Service.png"/>
+![](_misc/After%20Adding%20Amazon%20RDS%20Service.png)
 
-![]()
-<img src="_misc/Adding%20Amazon%20S3%20Service.png"/>
+![](_misc/Adding%20Amazon%20S3%20Service.png)
 
-![]()
-<img src="_misc/After%20Adding%20Amazon%20S3%20Service.png"/>
+![](_misc/After%20Adding%20Amazon%20S3%20Service.png)
 
-![]()
-<img src="_misc/Adding%20Amazon%20CloudFront%20Service.png"/>
+![](_misc/Adding%20Amazon%20CloudFront%20Service.png)
 
-![]()
-<img src="_misc/After%20Adding%20Amazon%20CloudFront%20Service.png"/>
+![](_misc/After%20Adding%20Amazon%20CloudFront%20Service.png)
 
-![]()
-<img src="_misc/Adding%20Amazon%20Route%2053%20Service.png"/>
+![](_misc/Adding%20Amazon%20Route%2053%20Service.png)
 
 Hit Next Step
 
-![]()
-<img src="_misc/After%20Adding%20Amazon%20Route%2053%20Service.png"/>
+![](_misc/After%20Adding%20Amazon%20Route%2053%20Service.png)
 
 ### Apply Policy to the Group
 
 Hit Apply Policy
 
-![]()
-<img src="_misc/Policy%20Name%20and%20Policy%20Document.png"/>
+![](_misc/Policy%20Name%20and%20Policy%20Document.png)
 
-![]()
-<img src="_misc/After%20creating%20an%20inline%20policy%20for%20a%20group.png"/>
+![](_misc/After%20creating%20an%20inline%20policy%20for%20a%20group.png)
 
 ### Create an Admin user for the app
 
