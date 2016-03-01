@@ -101,7 +101,7 @@
 
 Create a group that is assigned with administrative privileges, so that users who are meant to administer the app can be added to this group. 
 
-<img src="_misc/Creating%20a%20group.png"/>
+![](_misc/Creating%20a%20group.png)
 
 Click next without attaching any managed policies to the group.
 
