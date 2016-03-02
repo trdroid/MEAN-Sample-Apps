@@ -97,6 +97,15 @@
      ├── transformers@2.1.0 (promise@2.0.0, css@1.0.8, uglify-js@2.2.5)
      └── uglify-js@2.6.2 (async@0.2.10, uglify-to-browserify@1.0.2, source-map@0.5.3, yargs@3.10.0)
 
+# Setting up the App on the Cloud
+
+The following is an outline of the steps needed to setup the app on the Amazon cloud
+
+1) Create an admin group with administration permissions assigned to it
+
+2) Create an admin user and assign him to the admin group
+
+
 ### Create a Group
 
 Create a group that is assigned with administrative privileges, so that users who are meant to administer the app can be added to this group. 
@@ -234,7 +243,7 @@ The following screenshot indicates that password has been set for the user
 
 ### Signing in as PicShareAppAdmin user
 
-Signin as the PicShareAppAdmin user by visiting the Sign-In link in the browser
+Signin as the PicShareAppAdmin user by visiting the Sign-In link in the browser and the generated password. 
 
 ![](_misc/Login%20Screen.png)
 
@@ -245,4 +254,6 @@ This would force signout the root user, as shown in the following screenshot
 The PicShareAppAdmin user is asked to change the password, as is required by the root user.
 
 ![](_misc/Change%20your%20password%20screen.png)
+
+This proceeds to the AWS console displaying all AWS services on the dashboard, but the PicShareAppAdmin user can only operate within the bounds of the permissions assigned to him/her by the "root" user.
 
