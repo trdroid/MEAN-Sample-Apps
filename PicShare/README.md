@@ -214,6 +214,15 @@ Click on Users
 
 ![](_misc/Set%20Password%20Policy.png)
 
+Allow All Users to change their passwords for now
+
+![](_misc/Allow%20users%20to%20change%20password.png)
+
+Also note that there is an option to only let a specific set of users to change their passwords, as indicated in the popup in the following screenshot
+
+![](_misc/Password%20enabling%20ways.png)
+
+
 ![](_misc/Admin%20Security%20Credentials%20Tab%20After%20Setting%20Password.png)
 
 ### IAM Users Sign-In Link
