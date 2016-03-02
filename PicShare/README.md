@@ -246,6 +246,22 @@ The following screenshot indicates that password has been set for the user
 
 ![](_misc/IAM%20Users%20Sign-in%20link.png)
 
+### Create a role for the EC2 instances hosting the app
+
+![](_misc/Create%20a%20new%20role.png)
+
+![](_misc/create%20an%20ec2%20role.png)
+
+![](_misc/select%20role%20type%20Amazon%20EC2.png)
+
+![](_misc/EC2%20role%20attach%20policy%20screen.png)
+
+![](_misc/EC2%20Role%20Review.png)
+
+### Create a role for the OpsWorks Application Stack
+
+Create a role
+
 ### Signing in as PicShareAppAdmin user
 
 Signin as the PicShareAppAdmin user by visiting the Sign-In link in the browser and the generated password. 
