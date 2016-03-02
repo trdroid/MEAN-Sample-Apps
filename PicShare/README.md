@@ -105,6 +105,7 @@ The following is an outline of the steps needed to setup the app on the Amazon c
 
 2) Create an admin user and assign him to the admin group.
 
+3) Deploy the generated app to AWS using OpsWorks application deployment service.
 
 ### Create a Group
 
