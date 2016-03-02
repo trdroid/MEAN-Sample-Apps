@@ -101,9 +101,9 @@
 
 The following is an outline of the steps needed to setup the app on the Amazon cloud
 
-1) Create an admin group with administration permissions assigned to it
+1) Create an admin group with administration permissions assigned to it.
 
-2) Create an admin user and assign him to the admin group
+2) Create an admin user and assign him to the admin group.
 
 
 ### Create a Group
