@@ -248,6 +248,8 @@ The following screenshot indicates that password has been set for the user
 
 ### Create a role for the EC2 instances hosting the app
 
+Create an "instace" role to allow the application running on EC2 instances to programmatically access AWS services via AWS API, thereby eliminating the need for storing credentials in code.
+
 ![](_misc/Create%20a%20new%20role.png)
 
 ![](_misc/create%20an%20ec2%20role.png)
@@ -258,9 +260,11 @@ The following screenshot indicates that password has been set for the user
 
 ![](_misc/EC2%20Role%20Review.png)
 
-### Create a role for the OpsWorks Application Stack
+### Create a role for the application stack
 
-Create a role
+Create a "service" role to permit the entire application stack to carry out tasks that could otherwise be carried out manually in the OpsWorks dashboard.
+* rebooting instances
+* reporting metrics to the AWS console
 
 ### Signing in as PicShareAppAdmin user
 
