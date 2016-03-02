@@ -222,9 +222,27 @@ Also note that there is an option to only let a specific set of users to change 
 
 ![](_misc/Password%20enabling%20ways.png)
 
+The following screenshot indicates that password has been set for the user
+
+![](_misc/Users%20view%20after%20assigning%20password%20to%20admin.png)
 
 ![](_misc/Admin%20Security%20Credentials%20Tab%20After%20Setting%20Password.png)
 
 ### IAM Users Sign-In Link
 
 ![](_misc/IAM%20Users%20Sign-in%20link.png)
+
+### Signing in as PicShareAppAdmin user
+
+Signin as the PicShareAppAdmin user by visiting the Sign-In link in the browser
+
+![](_misc/Login%20Screen.png)
+
+This would force signout the root user, as shown in the following screenshot
+
+![](_misc/Forced%20sign%20out.png)
+
+The PicShareAppAdmin user is asked to change the password, as is required by the root user.
+
+![](_misc/Change%20your%20password%20screen.png)
+
