@@ -214,6 +214,8 @@ Click on Users
 
 ![](_misc/Set%20Password%20Policy.png)
 
+![](_misc/Admin%20Security%20Credentials%20Tab%20After%20Setting%20Password.png)
+
 ### IAM Users Sign-In Link
 
 ![](_misc/IAM%20Users%20Sign-in%20link.png)
