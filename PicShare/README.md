@@ -260,6 +260,7 @@ The following screenshot indicates that password has been set for the user
 
 ### Create a role for the OpsWorks Application Stack
 
+Create a role
 
 ### Signing in as PicShareAppAdmin user
 
