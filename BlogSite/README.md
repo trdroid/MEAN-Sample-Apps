@@ -187,7 +187,7 @@ Notice that bower is added to the devDependencies block of BlogSite/package.json
 
 Notice the dependencies under <i>BlogSite/node_modules</i>
 
-<img src="_misc/dependencies%20in%20node_module.png"/>
+![](_misc/dependencies%20in%20node_module.png)
 
 ### Install client-side dependencies
 
@@ -353,8 +353,7 @@ Explore the project structure to find the client-side dependencies under public/
 
 <i>BlogSite/public/vendor</i>
 
-<img src="_misc/installed%20client-side%20dependencies.png"/>
-
+![](_misc/installed%20client-side%20dependencies.png)
 
 ### Starting with E & N in MEAN
 
@@ -418,7 +417,7 @@ html
 
 ### Project Structure
 
-<img src="_misc/server%20app%20and%20server%20views%20project%20structure.png"/>
+![](_misc/server%20app%20and%20server%20views%20project%20structure.png)
 
 ### Install nodemon globally
 
@@ -447,11 +446,11 @@ html
 
 ### In the Browser
 
-<img src="_misc/initial%20step%20in%20the%20browser.png"/>
+![](_misc/initial%20step%20in%20the%20browser.png)
 
 ### Organizing view in layouts
 
-<img src="_misc/initial%20layouts.png"/>
+![](_misc/initial%20layouts.png)
 
 1) index.jade extends layouts/main_layout.jade, which provides a general layout which can be extended to provide view-specific content.
 
@@ -506,11 +505,11 @@ Now, when the server receives a request to /vendor/angular/angular.js, the stati
 
 Check in the browser to see if the scripts are being loaded 
 
-<img src="_misc/in%20browser%20with%20scripts%20delivered.png"/>
+![](_misc/in%20browser%20with%20scripts%20delivered.png)
 
 ### Flow
 
-<img src="_misc/entire%20flow%201.png"/>
+![](_misc/entire%20flow%201.png)
 
 ### Starting with A in MEAN
 
@@ -664,11 +663,11 @@ p {{ content }}
 
 <b> Changes included </b>
 
-<img src="_misc/new%20files%20with%20angular%20app%20and%20partials.png"/>
+![](_misc/new%20files%20with%20angular%20app%20and%20partials.png)
 
 ### Flow
 
-<img src="_misc/entire%20flow%202.png"/>
+![](_misc/entire%20flow%202.png)
 
 ### Starting with M in MEAN
 
@@ -951,7 +950,7 @@ Switch to "blogsite" database and create an entry in the "blogs" table.
 
 ### In Browser
 
-<img src="_misc/passing%20first%20blog%20to%20index.png"/>
+![](_misc/passing%20first%20blog%20to%20index.png)
 
 <hr>
 
@@ -1189,7 +1188,7 @@ angular.module('app').controller('mainController', function($scope, $http) {
 
 ### In Browser
 
-<img src="_misc/login%20form%20in%20browser.png"/>
+![](_misc/login%20form%20in%20browser.png)
 
 ### Installing necessary modules
 
@@ -1513,9 +1512,9 @@ console.log('Listening on port ' + port + '...');
 	Connected to blogsite database
 
 
-<img src="_misc/successful%20signin.png"/>
+![](_misc/successful%20signin.png)
 
-<img src="_misc/failed%20to%20sign%20in.png"/>
+![](_misc/failed%20to%20sign%20in.png)
 
 ### Organizing client-side code
 
@@ -1664,7 +1663,7 @@ angular.module('app').config(function($routeProvider, $locationProvider) {
 
 The app crashes!!!
 
-<img src="_misc/error%20-%20tried%20to%20load%20angular%20more%20than%20once.png"/>
+![](_misc/error%20-%20tried%20to%20load%20angular%20more%20than%20once.png)
 
 It is because the route to partials in the server app only handles requests for files immediately under <i>BlogSite/server/views/partials/</i>, but since the root.jade has been moved moved to a sub-directory under the  <i>BlogSite/server/views/partials/</i> directory, i.e. to <i>BlogSite/server/views/partials/home</i>, a request to root.jade is handled by the catch-all route.
 
@@ -1713,7 +1712,7 @@ Now, a request to 'partials/home/root' will match '/partials/\*' and is handled 
 
 ### Snapshot of new project structure
 
-<img src="_misc/client%20home%20partials%20home%20project%20structure.png"/>
+![](_misc/client%20home%20partials%20home%20project%20structure.png)
 
 ### Grouping client-side and partials structures 
 
@@ -1749,7 +1748,7 @@ app.get('*', function(req, res) {
 
 ### Snapshot of new project structure
 
-<img src="_misc/after%20keeping%20partials%20with%20client-side%20code.png"/>
+![](_misc/after%20keeping%20partials%20with%20client-side%20code.png)
 
 ### Adding to the user-interface
 
@@ -1825,7 +1824,7 @@ block main-content
 
 ### In Browser
 
-<img src="_misc/in%20browser%20with%20navbar.png"/>
+![](_misc/in%20browser%20with%20navbar.png)
 
 <b>Adding navbar controls</b>
 
@@ -1860,7 +1859,7 @@ div
 
 ### In Browser
 
-<img src="_misc/in%20browser%20with%20navbar%20button.png"/>
+![](_misc/in%20browser%20with%20navbar%20button.png)
 
 ### Need for a separate controller
 
@@ -1892,11 +1891,11 @@ angular.module('app').controller('mvNavBarController', function($scope) {
 
 ### Project structure
 
-<img src="_misc/mvNavBarController%20in%20project.png"/>
+![](_misc/mvNavBarController%20in%20project.png)
 
 ### Refactoring server code
 
-<img src="_misc/server%20side%20code%20refactoring.png"/>
+![](_misc/server%20side%20code%20refactoring.png)
 
 <i>config.js</i> contains configuration parameters.
 
@@ -1915,7 +1914,7 @@ module.exports = {
 
 Also, notice that the /signin route refactored to routes.js contains logic for implementing the signin functionality. It is not appropriate to place logic in a routes file, so that code can be refactored to its own file (authenticate.js).
 
-<img src="_misc/after%20refactoring%20authentication%20code.png"/>
+![](_misc/after%20refactoring%20authentication%20code.png)
 
 ### Contents of server-side source files
 
@@ -2270,7 +2269,7 @@ angular.module('app').factory('mvToastrNotifier', function(mvToastr) {
 });
 ```
 
-<img src="_misc/mvToastrNotifier%20in%20project.png"/>
+![](_misc/mvToastrNotifier%20in%20project.png)
 
 Include toastr.js and the newly created file in scripts.jade
 
@@ -2321,9 +2320,9 @@ angular.module('app').controller('mvMainController', function($scope, $http, mvT
 
 <i> In browser </i>
 
-<img src="_misc/success%20message.png"/>
+![](_misc/success%20message.png)
 
-<img src="_misc/failure%20message.png"/>
+![](_misc/failure%20message.png)
 
 <b> keep track of the user who logged in </b>
 
@@ -2348,7 +2347,7 @@ angular.module('app').factory('mvUserIdentity', function() {
 });
 ```
 
-<img src="_misc/mvUserIdentity%20in%20project%20structure.png"/>
+![](_misc/mvUserIdentity%20in%20project%20structure.png)
 
 In mvMainController, include mvUserIdentity as a dependency. Once a user is authenticated, receive the user object from the server and stash it in the "user" field of mvUserIdentity. 
 
@@ -2453,7 +2452,7 @@ angular.module('app').factory('mvAuthenticate', function($http, mvUserIdentity, 
 });
 ```
 
-<img src="_misc/mvAuthenticate%20in%20project%20structure.png"/>
+![](_misc/mvAuthenticate%20in%20project%20structure.png)
 
 
 Declare the newly created service "mvAuthenticate" as a dependency in "mvMainController" and refactor the code to delegate the call to login to the service
@@ -3011,11 +3010,11 @@ module.exports = function(app) {
 
 After signing in ... 
 
-<img src="_misc/after%20signing%20in.png"/>
+![](_misc/after%20signing%20in.png)
 
 After hitting logout ...
 
-<img src="_misc/after%20signing%20out.png"/>
+![](_misc/after%20signing%20out.png)
 
 ### Adding favicon.ico
 
@@ -3093,6 +3092,6 @@ The catch-all route handler is called only once, which serves the index page. Th
 
 <b> favicon.ico, as seen in the browser tab </b>
 
-<img src="_misc/favicon.ico%20file%20in%20browser.png"/>
+![](_misc/favicon.ico%20file%20in%20browser.png)
 
 ### 
