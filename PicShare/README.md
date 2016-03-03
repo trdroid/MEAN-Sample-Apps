@@ -106,10 +106,8 @@ The following is an outline of the steps needed to setup the app on the Amazon c
 2) Create an IAM user and assign him to the admin group, so that he can act as the administrator for the application on the cloud
 
 3) Deploy the generated app to AWS using OpsWorks application deployment service.
+
    1) Create an "instance" role for the EC2 instances that host the application to allow programmatic access to other AWS services (via AWS APIs) without having to store the security credentials in the source code.
-   2) Create an 
-
-
 
 ### Create a Group
 
