@@ -99,7 +99,7 @@
 
 # Setting up the App on the Cloud
 
-The following is an outline of the steps needed to setup the app on the Amazon cloud
+The following is an outline of the steps needed to setup the app on the Amazon cloud:
 
 1) Create an admin group and assign it administration permissions required to administer the app on the cloud.
 
