@@ -107,7 +107,8 @@ The following is an outline of the steps needed to setup the app on the Amazon c
 
 3) Deploy the generated app to AWS using OpsWorks application deployment service.
 
-   1) Create an "instance" role for the EC2 instances that host the application to allow programmatic access to other AWS services (via AWS APIs) without having to store the security credentials in the source code.
+* Create an "instance" role for the EC2 instances that host the application to allow programmatic access to other AWS services (via AWS APIs) without having to store the security credentials in the source code.
+* Create a "service" role for the application stack to carry out tasks that could otherwise be carried out in the OpsWorks dashboard manually.
 
 ### Create a Group
 
