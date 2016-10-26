@@ -110,7 +110,17 @@ The following is an outline of the steps needed to setup the app on the Amazon c
 * Create an "instance" role for the EC2 instances that host the application to allow programmatic access to other AWS services (via AWS APIs) without having to store the security credentials in the source code.
 * Create a "service" role for the application stack to carry out tasks that could otherwise be carried out in the OpsWorks dashboard manually.
 
-### Create a Group
+### Step1 - Create a Group
+
+Login to the Amazon Web Services account.
+
+Navigate to "Identity and Access Management" service located under the "Security & Identity" section, as can be found in the following snapshot. 
+
+![](_misc/AWS%20Services.png)
+
+Click on "Groups" in the dashboard.
+
+Click on the "Create New Group" button.
 
 Create a group that is assigned with administrative privileges, so that users who are meant to administer the app can be added to this group. 
 
