@@ -150,7 +150,7 @@ Clicking on "select" opens up the Edit permissions screen
 
 ![](_misc/Edit%20Permissions%20screen%20of%20Policy%20Generator.png)
 
-In this screen, grant all the services and the corresponding actions on the services that any of the app's Administrators is allowed to handle. 
+In this screen, grant the services and the corresponding actions on the services that any of the app's Administrators are allowed to administer and operate. 
 
 Grant Access to the following services for the app's Administrator's group:
 
@@ -161,31 +161,51 @@ Grant Access to the following services for the app's Administrator's group:
 * Amazon CloudFront
 * Amazon Route53
 
+Grant the AWS OpsWork service and allow all possible actions on it to the admin group.
+
 ![](_misc/Granting%20AWS%20OpsWorks%20Permission.png)
+
+After granting access ...
 
 ![](_misc/After%20adding%20the%20statement%20for%20AWS%20OpsWorks.png)
 
+Grant the AWS EC2 service and allow all possible actions on it to the admin group.
+
 ![](_misc/Selecting%20Amazon%20EC2%20Service.png)
+
+After granting access ...
 
 ![](_misc/After%20Adding%20Amazon%20EC2%20Service.png)
 
+Grant the AWS RDS service and allow all possible actions on it to the admin group.
+
 ![](_misc/Adding%20Amazon%20RDS%20Service.png)
 
+After granting access ...
+
 ![](_misc/After%20Adding%20Amazon%20RDS%20Service.png)
+
+Grant the AWS S3 service and allow all possible actions on it to the admin group.
 
 ![](_misc/Adding%20Amazon%20S3%20Service.png)
 
 ![](_misc/After%20Adding%20Amazon%20S3%20Service.png)
 
+Grant the AWS CloudFront service and allow all possible actions on it to the admin group.
+
 ![](_misc/Adding%20Amazon%20CloudFront%20Service.png)
 
 ![](_misc/After%20Adding%20Amazon%20CloudFront%20Service.png)
 
+Grant the AWS Route53 service and allow all possible actions on it to the admin group.
+
 ![](_misc/Adding%20Amazon%20Route%2053%20Service.png)
 
-Hit Next Step
+After granting access ...
 
 ![](_misc/After%20Adding%20Amazon%20Route%2053%20Service.png)
+
+After adding all the required AWS services, hit "Next Step"
 
 ### Apply Policy to the Group
 
