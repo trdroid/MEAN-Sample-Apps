@@ -118,6 +118,10 @@ Navigate to "Identity and Access Management" service located under the "Security
 
 ![](_misc/AWS%20Services.png)
 
+Click on "Groups" in the dashboard.
+
+Click on the "Create New Group" button.
+
 Create a group that is assigned with administrative privileges, so that users who are meant to administer the app can be added to this group. 
 
 ![](_misc/Creating%20a%20group.png)
