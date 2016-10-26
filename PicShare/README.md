@@ -199,11 +199,15 @@ Grant the AWS S3 service and allow all possible actions on it to the admin group
 
 ![](_misc/Adding%20Amazon%20S3%20Service.png)
 
+After granting access ...
+
 ![](_misc/After%20Adding%20Amazon%20S3%20Service.png)
 
 Grant the AWS CloudFront service and allow all possible actions on it to the admin group.
 
 ![](_misc/Adding%20Amazon%20CloudFront%20Service.png)
+
+After granting access ...
 
 ![](_misc/After%20Adding%20Amazon%20CloudFront%20Service.png)
 
@@ -215,7 +219,7 @@ After granting access ...
 
 ![](_misc/After%20Adding%20Amazon%20Route%2053%20Service.png)
 
-After adding all the required AWS services, hit "Next Step"
+After granting the required AWS services, hit "Next Step"
 
 ### Apply Policy to the Group
 
